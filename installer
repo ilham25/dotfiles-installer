@@ -113,9 +113,9 @@ def debian():
             "git%20clone%20https://github.com/nwg-piotr/psuinfo.git", "debian", False)
     cd('psuinfo/')
     execute("Copy psuinfo executable to /usr/bin",
-            "cp%20-r%20psuinfo%20/usr/bin", "", False)
+            "sudo%20cp%20-r%20psuinfo%20/usr/bin", "", False)
     execute("Copy psuinfo icons to /usr/bin",
-            "cp%20-r%20icons%20/usr/bin", "", False)
+            "sudo%20cp%20-r%20icons%20/usr/bin", "", False)
     execute()
     execute("-- Copy psuinfo and icon to /usr/bin directory",
             "sudo%20cp%20-r%20{psuinfo,icons}%20/usr/bin", "debian", False)
