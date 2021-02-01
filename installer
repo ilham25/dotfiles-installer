@@ -48,9 +48,6 @@ def cd(dir, home=False):
         os.chdir(homeDir+dir)
 
 
-def cp(filename,)
-
-
 title = f"""{PURPLE}*AETHER DOTFILES INSTALLER*
 INSTALLER BY ilham25{NC}"""
 selectText = """
