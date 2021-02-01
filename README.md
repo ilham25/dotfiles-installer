@@ -1,5 +1,7 @@
 # Aether Dotfiles Installer
 
+![SS](https://github.com/ilham25/dotfiles-aether/raw/main/Other/dot.gif)
+
 > **Dependency Required**
 
 ```bash
