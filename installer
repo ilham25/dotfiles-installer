@@ -59,8 +59,6 @@ Select your linux base :
 
 def dotfiles():
     print(f"{GREEN}INSTALLING DOTFILES CONFIG{NC}")
-    execute("Creating temporary directory", "mkdir%20tmp", "", False)
-    cd('tmp/')
     execute("Clone dotfiles-aether",
             "git%20clone%20https://github.com/ilham25/dotfiles-aether", "", False)
     cd('dotfiles-aether')
