@@ -105,7 +105,7 @@ def debian():
     execute("--", "ninja%20-C%20build%20install", "debian", False)
     execute("Installing psuinfo - Network & CPU Monitor, RAM Usage",
             "echo", "debian", False)
-    cd("")
+    cd("..")
     execute("-- Clone psuinfo from it's repo",
             "git%20clone%20https://github.com/nwg-piotr/psuinfo.git", "debian", False)
     cd('psuinfo/')
