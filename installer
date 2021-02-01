@@ -115,6 +115,7 @@ def debian():
             "sudo%20cp%20-r%20psuinfo%20/usr/bin", "", False)
     execute("Copy psuinfo icons to /usr/bin",
             "sudo%20cp%20-r%20icons%20/usr/bin", "", False)
+    cd("..")
     dotfiles()
 
 
