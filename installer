@@ -16,13 +16,14 @@ UNDERLINE = '\033[4m'
 
 
 def execute(section, commands, base, ignore):
-    splitted = commands.split(" ")
+    splitted = commands.split("%20")
     if ignore == True:
         if base == "debian":
             splitted.append("-y")
         else:
             splitted.append("--noconfirm")
 
+    print(splitted)
     print(f"{YELLOW}{section}{NC}")
     try:
         subprocess.run(splitted, check=True, stdout=subprocess.DEVNULL)
@@ -41,54 +42,60 @@ Select your linux base :
 
 def dotfiles():
     print(f"{GREEN}INSTALLING DOTFILES CONFIG{NC}")
-    execute("Creating temporary directory", "mkdir tmp", "", False)
-    execute("Clone dotfiles-aether ",
-            "git clone https://github.com/ilham25/dotfiles-aether", "", False)
+    execute("Creating temporary directory", "mkdir%20tmp", "", False)
+    execute("-- Change to temporary directory", "cd%20tmp", "", False)
+    execute("Clone dotfiles-aether",
+            "git%20clone%20https://github.com/ilham25/dotfiles-aether", "", False)
     execute("Copy all dotfiles config to home directory",
-            "cd dotfiles-aether/ && cp -r {.*,*} ~/", "", False)
-    execute("Installing custom icon", "cd ~/.icons/", "", False)
-    execute("--", "tar -Jxvf oomox-aesthetic-light.tar.xz && tar -Jxvf oomox-aesthetic-dark.tar.xz", "", False)
+            "cd%20dotfiles-aether/", "", False)
+    execute("--", "cp%20-r%20{.*,*}%20~/", "", False)
+    execute("Installing custom icon", "cd%20~/.icons/", "", False)
+    execute("--", "tar%20-Jxvf%20oomox-aesthetic-light.tar.xz", "", False)
+    execute("--", "tar%20-Jxvf%20oomox-aesthetic-dark.tar.xz", "", False)
     execute("-- Copy all custom icons to /usr/share/icons directory",
-            "sudo cp -r {oomox-aesthetic-light,oomox-aesthetic-dark} /usr/share/icons/", "", False)
+            "sudo%20cp%20-r%20{oomox-aesthetic-light,oomox-aesthetic-dark}%20/usr/share/icons/", "", False)
     execute("-- Delete unnecessary files",
-            "rm -r ~/.icons/{oomox-aesthetic-light,oomox-aesthetic-dark,*.tar.xz}", "", False)
-    execute("Refresh font cache", "fc-cache -rv", "", False)
+            "rm%20-r%20~/.icons/{oomox-aesthetic-light,oomox-aesthetic-dark,*.tar.xz}", "", False)
+    execute("Refresh font cache", "fc-cache%20-rv", "", False)
 
 
 def debian():
     print(f"{GREEN}INSTALLING DOTFILES DEPENDENCIES${NC}")
     execute("Installing i3-Gaps Window Manager", "echo", "debian", False)
-    execute("", "sudo apt-get install software-properties-common", "debian", True)
+    execute(
+        "--", "sudo%20apt-get%20install%20software-properties-common", "debian", True)
     execute("-- Add PPA repo for i3-gaps",
-            "sudo add-apt-repository ppa:kgilmer/speed-ricer", "debian", True)
-    execute("-- Update apt", "sudo apt-get update", "debian", True)
+            "sudo%20add-apt-repository%20ppa:kgilmer/speed-ricer", "debian", True)
+    execute("-- Update apt", "sudo%20apt-get update", "debian", True)
     execute("-- Installation",
-            'sudo apt-get install i3-gaps-wm i3-gaps-session', "debian", True)
-    execute("Installing core dependencies", 'sudo apt install feh git rsync python psmisc wireless-tools alsa-utils brightnessctl nitrogen dunst tint2 gsimplecal rofi lxappearance qt5ct qt5-style-plugins lxpolkit xautolock rxvt-unicode xclip scrot thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman ffmpegthumbnailer tumbler w3m w3m-img geany viewnior mpv mpd mpc ncmpcpp pavucontrol parcellite neofetch htop imagemagick ffmpeg playerctl xsettingsd', "debian", True)
+            'sudo%20apt-get%20install%20i3-gaps-wm%20i3-gaps-session', "debian", True)
+    execute("Installing core dependencies", 'sudo%20apt%20install%20feh%20git%20rsync%20python%20psmisc%20wireless-tools%20alsa-utils%20brightnessctl%20nitrogen%20dunst%20tint2%20gsimplecal%20rofi%20lxappearance%20qt5ct%20qt5-style-plugins%20lxpolkit%20xautolock%20rxvt-unicode%20xclip%20scrot%20thunar%20thunar-archive-plugin%20thunar-media-tags-plugin%20thunar-volman%20ffmpegthumbnailer%20tumbler%20w3m%20w3m-img%20geany%20viewnior%20mpv%20mpd%20mpc%20ncmpcpp%20pavucontrol%20parcellite%20neofetch%20htop%20imagemagick%20ffmpeg%20playerctl%20xsettingsd', "debian", True)
     execute("Installing oh-my-zsh & plugins",
-            "sudo apt install zsh", "debian", True)
+            "sudo%20apt%20install%20zsh", "debian", True)
     execute("-- Change default shell to zsh for current user",
-            "chsh -s `which zsh`", "debian", False)
+            "chsh%20-s%20/usr/bin/zsh", "debian", False)
     execute("-- Plugin install (oh-my-zsh)",
-            'sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"', "debian", False)
+            'sh%20-c%20"$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"', "debian", False)
     execute("-- Plugin install (zsh-syntax-highlighting)",
-            'git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting', "debian", False)
+            'git%20clone%20https://github.com/zsh-users/zsh-syntax-highlighting.git%20${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting', "debian", False)
     execute("-- Plugin install (zsh-autosuggestions)",
-            'git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions', "debian", False)
-    execute('Installing picom compositor', "sudo apt install libxext-dev libxcb1-dev libxcb-damage0-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-render-util0-dev libxcb-render0-dev libxcb-randr0-dev libxcb-composite0-dev libxcb-image0-dev libxcb-present-dev libxcb-xinerama0-dev libxcb-glx0-dev libpixman-1-dev libdbus-1-dev libconfig-dev libgl1-mesa-dev  libpcre2-dev  libevdev-dev uthash-dev libev-dev libx11-xcb-dev ninja-build meson", "debian", True)
+            'git%20clone%20https://github.com/zsh-users/zsh-autosuggestions.git%20${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions', "debian", False)
+    execute('Installing picom compositor', "sudo%20apt%20install%20libxext-dev%20libxcb1-dev%20libxcb-damage0-dev%20libxcb-xfixes0-dev%20libxcb-shape0-dev%20libxcb-render-util0-dev%20libxcb-render0-dev%20libxcb-randr0-dev%20libxcb-composite0-dev%20libxcb-image0-dev%20libxcb-present-dev%20libxcb-xinerama0-dev%20libxcb-glx0-dev%20libpixman-1-dev%20libdbus-1-dev%20libconfig-dev%20libgl1-mesa-dev%20libpcre2-dev%20libevdev-dev%20uthash-dev%20libev-dev%20libx11-xcb-dev%20ninja-build meson", "debian", True)
     execute("-- Clone picom build source",
-            "git clone https://github.com/yshui/picom.git && cd picom/", "debian", False)
+            "git%20clone%20https://github.com/yshui/picom.git", "debian", False)
+    execute("--", "cd%20picom/", "", False)
     execute("-- Start building",
-            "git submodule update --init --recursive", "debian", False)
-    execute("-- ", "meson --buildtype=release . build", "debian", False)
-    execute("-- ", "ninja -C build", "debian", False)
-    execute("-- ", "ninja -C build install", "debian", False)
+            "git%20submodule%20update%20--init%20--recursive", "debian", False)
+    execute("--", "meson%20--buildtype=release%20.%20build", "debian", False)
+    execute("--", "ninja%20-C%20build", "debian", False)
+    execute("--", "ninja%20-C%20build%20install", "debian", False)
     execute("Installing psuinfo - Network & CPU Monitor, RAM Usage",
             "echo", "debian", False)
     execute("-- Clone psuinfo from it's repo",
-            "git clone https://github.com/nwg-piotr/psuinfo.git && cd psuinfo/", "debian", False)
+            "git%20clone%20https://github.com/nwg-piotr/psuinfo.git", "debian", False)
+    execute("--", "cd%20psuinfo/", "debian", False)
     execute("-- Copy psuinfo and icon to /usr/bin directory",
-            "sudo cp -r {psuinfo,icons} /usr/bin", "debian", False)
+            "sudo%20cp%20-r%20{psuinfo,icons}%20/usr/bin", "debian", False)
     dotfiles()
 
 
@@ -96,26 +103,26 @@ def arch():
     print(f"{GREEN}INSTALLING DOTFILES DEPENDENCIES${NC}")
     print(f"{RED}Consider install yay AUR helper first if error acquired!{NC}")
     execute("Installing i3-Gaps Window Manager",
-            "sudo pacman -S i3-gaps", "arch", True)
+            "sudo%20pacman%20-S%20i3-gaps", "arch", True)
     execute("Installing audio",
-            "sudo pacman -S alsa-utils pulseaudio pulseaudio-alsa", "arch", True)
-    execute("Installing brightness", "yay -S brightnessctl", "arch", True)
+            "sudo%20pacman%20-S%20alsa-utils%20pulseaudio%20pulseaudio-alsa", "arch", True)
+    execute("Installing brightness", "yay%20-S%20brightnessctl", "arch", True)
     execute("Installing psuinfo - Network & CPU Monitor, RAM Usage",
-            "yay -S psuinfo", "arch", True)
+            "yay%20-S%20psuinfo", "arch", True)
     execute("Installing wireless tools",
-            "sudo pacman -S wireless_tools", "arch", True)
-    execute("Installing git", "sudo pacman -S git", "arch", True)
+            "sudo%20pacman%20-S%20wireless_tools", "arch", True)
+    execute("Installing git", "sudo%20pacman%20-S%20git", "arch", True)
     execute("Installing other utility (panel, notification, terminal, file manager, etc)",
-            "yay -S dunst tint2 gsimplecal rofi feh lxappearance qt5ct qt5-styleplugins lxsession xautolock rxvt-unicode-patched xclip scrot thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman tumbler w3m geany nano vim viewnior pavucontrol parcellite neofetch htop picom-ibhagwan-git gtk2-perl xfce4-power-manager zsh zsh-completions imagemagick playerctl networkmanager-dmenu", "arch", True)
+            "yay%20-S%20dunst%20tint2%20gsimplecal%20rofi%20feh%20lxappearance%20qt5ct%20qt5-styleplugins%20lxsession%20xautolock%20rxvt-unicode-patched%20xclip%20scrot%20thunar%20thunar-archive-plugin%20thunar-media-tags-plugin%20thunar-volman%20tumbler%20w3m%20geany%20nano%20vim%20viewnior%20pavucontrol%20parcellite%20neofetch%20htop%20picom-ibhagwan-git%20gtk2-perl%20xfce4-power-manager%20zsh%20zsh-completions%20imagemagick%20playerctl%20networkmanager-dmenu", "arch", True)
     execute("Installing oh-my-zsh & plugins", "echo", "arch", False)
     execute("-- Change default shell to zsh for current user",
-            "chsh -s /usr/bin/zsh", "arch", False)
+            "chsh%20-s%20/usr/bin/zsh", "arch", False)
     execute("-- Plugin install (oh-my-zsh)",
-            'sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"', "arch", False)
+            'sh%20-c%20"$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"', "arch", False)
     execute("-- Plugin install (zsh-syntax-highlighting)",
-            'git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting', "arch", False)
+            'git%20clone%20https://github.com/zsh-users/zsh-syntax-highlighting.git%20${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting', "arch", False)
     execute("-- Plugin install (zsh-autosuggestions)",
-            'git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions', "arch", False)
+            'git%20clone%20https://github.com/zsh-users/zsh-autosuggestions.git%20${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions', "arch", False)
     dotfiles()
 
 
