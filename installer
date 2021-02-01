@@ -4,6 +4,7 @@ import subprocess
 import os
 import getpass
 
+
 # COLORS VARIABLE
 
 PURPLE = '\033[95m'
@@ -15,6 +16,9 @@ RED = '\033[91m'
 NC = '\033[0m'
 BOLD = '\033[1m'
 UNDERLINE = '\033[4m'
+
+# WORKING DIRECTORY
+workingDir = os.getcwd() + '/'
 
 
 def execute(section, commands, base, ignore):
@@ -35,7 +39,6 @@ def execute(section, commands, base, ignore):
 
 def cd(dir, home=False):
     print(f"{YELLOW}Change directory to {dir}")
-    workingDir = os.getcwd() + '/'
     username = getpass.getuser()
     homeDir = f'/home/{username}/'
 
@@ -43,6 +46,9 @@ def cd(dir, home=False):
         os.chdir(workingDir + dir)
     else:
         os.chdir(homeDir+dir)
+
+
+def cp(filename,)
 
 
 title = f"""{PURPLE}*AETHER DOTFILES INSTALLER*
@@ -109,6 +115,11 @@ def debian():
     execute("-- Clone psuinfo from it's repo",
             "git%20clone%20https://github.com/nwg-piotr/psuinfo.git", "debian", False)
     cd('psuinfo/')
+    execute("Copy psuinfo executable to /usr/bin",
+            "cp%20-r%20psuinfo%20/usr/bin", "", False)
+    execute("Copy psuinfo icons to /usr/bin",
+            "cp%20-r%20icons%20/usr/bin", "", False)
+    execute()
     execute("-- Copy psuinfo and icon to /usr/bin directory",
             "sudo%20cp%20-r%20{psuinfo,icons}%20/usr/bin", "debian", False)
     dotfiles()
