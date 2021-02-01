@@ -158,5 +158,6 @@ choice = input("Select : ")
 
 try:
     options[int(choice)]()
-except:
+except Exception as err:
     print(f"{RED}Input error")
+    print(err)
