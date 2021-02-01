@@ -62,7 +62,8 @@ def dotfiles():
     execute("Clone dotfiles-aether",
             "git%20clone%20https://github.com/ilham25/dotfiles-aether", "", False)
     cd('dotfiles-aether')
-    execute("--", "cp%20-r%20{.*,*}%20~/", "", False)
+    #execute("--", "cp%20-r%20{.*,*}%20~/", "", False)
+    os.system("cp -r {.*,*} ~/")
     execute("Installing custom icon", "echo", "", False)
     cd('.icons/', True)
     execute("--", "tar%20-Jxvf%20oomox-aesthetic-light.tar.xz", "", False)
@@ -81,7 +82,7 @@ def debian():
         "--", "sudo%20apt-get%20install%20software-properties-common", "debian", True)
     execute("-- Add PPA repo for i3-gaps",
             "sudo%20add-apt-repository%20ppa:kgilmer/speed-ricer", "debian", True)
-    execute("-- Update apt", "sudo%20apt-get update", "debian", True)
+    execute("-- Update apt", "sudo%20apt-get%20update", "debian", True)
     execute("-- Installation",
             'sudo%20apt-get%20install%20i3-gaps-wm%20i3-gaps-session', "debian", True)
     execute("Installing core dependencies", 'sudo%20apt%20install%20feh%20git%20rsync%20python%20psmisc%20wireless-tools%20alsa-utils%20brightnessctl%20nitrogen%20dunst%20tint2%20gsimplecal%20rofi%20lxappearance%20qt5ct%20qt5-style-plugins%20lxpolkit%20xautolock%20rxvt-unicode%20xclip%20scrot%20thunar%20thunar-archive-plugin%20thunar-media-tags-plugin%20thunar-volman%20ffmpegthumbnailer%20tumbler%20w3m%20w3m-img%20geany%20viewnior%20mpv%20mpd%20mpc%20ncmpcpp%20pavucontrol%20parcellite%20neofetch%20htop%20imagemagick%20ffmpeg%20playerctl%20xsettingsd', "debian", True)
@@ -95,7 +96,7 @@ def debian():
             'git%20clone%20https://github.com/zsh-users/zsh-syntax-highlighting.git%20${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting', "debian", False)
     execute("-- Plugin install (zsh-autosuggestions)",
             'git%20clone%20https://github.com/zsh-users/zsh-autosuggestions.git%20${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions', "debian", False)
-    execute('Installing picom compositor', "sudo%20apt%20install%20libxext-dev%20libxcb1-dev%20libxcb-damage0-dev%20libxcb-xfixes0-dev%20libxcb-shape0-dev%20libxcb-render-util0-dev%20libxcb-render0-dev%20libxcb-randr0-dev%20libxcb-composite0-dev%20libxcb-image0-dev%20libxcb-present-dev%20libxcb-xinerama0-dev%20libxcb-glx0-dev%20libpixman-1-dev%20libdbus-1-dev%20libconfig-dev%20libgl1-mesa-dev%20libpcre2-dev%20libevdev-dev%20uthash-dev%20libev-dev%20libx11-xcb-dev%20ninja-build%20meson%20libcpre3-dev", "debian", True)
+    execute('Installing picom compositor', "sudo%20apt%20install%20libxext-dev%20libxcb1-dev%20libxcb-damage0-dev%20libxcb-xfixes0-dev%20libxcb-shape0-dev%20libxcb-render-util0-dev%20libxcb-render0-dev%20libxcb-randr0-dev%20libxcb-composite0-dev%20libxcb-image0-dev%20libxcb-present-dev%20libxcb-xinerama0-dev%20libxcb-glx0-dev%20libpixman-1-dev%20libdbus-1-dev%20libconfig-dev%20libgl1-mesa-dev%20libpcre2-dev%20libevdev-dev%20uthash-dev%20libev-dev%20libx11-xcb-dev%20ninja-build%20meson%20libpcre3-dev", "debian", True)
     execute("-- Clone picom build source",
             "git%20clone%20https://github.com/yshui/picom.git", "debian", False)
     cd("picom/")
