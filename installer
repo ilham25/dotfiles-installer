@@ -1,6 +1,8 @@
 #! /usr/bin/env python3
 
 import subprocess
+import os
+import getpass
 
 # COLORS VARIABLE
 
@@ -23,12 +25,24 @@ def execute(section, commands, base, ignore):
         else:
             splitted.append("--noconfirm")
 
-    print(splitted)
     print(f"{YELLOW}{section}{NC}")
-    try:
-        subprocess.run(splitted, check=True)
-    except Exception as err:
-        print(f"{RED}Error when installing some packages, please retry{NC}")
+    print(splitted)
+#     try:
+#         subprocess.run(splitted, check=True)
+#     except Exception as err:
+#         print(f"{RED}Error when installing some packages, please retry{NC}")
+
+
+def cd(dir, home=False):
+    print(f"{YELLOW}Change directory to {dir}")
+    workingDir = os.getcwd() + '/'
+    username = getpass.getuser()
+    homeDir = f'/home/{username}/'
+
+    if(home == False):
+        os.chdir(workingDir + dir)
+    else:
+        os.chdir(homeDir+dir)
 
 
 title = f"""{PURPLE}*AETHER DOTFILES INSTALLER*
@@ -46,10 +60,10 @@ def dotfiles():
     execute("-- Change to temporary directory", "cd%20tmp", "", False)
     execute("Clone dotfiles-aether",
             "git%20clone%20https://github.com/ilham25/dotfiles-aether", "", False)
-    execute("Copy all dotfiles config to home directory",
-            "cd%20dotfiles-aether/", "", False)
+    cd('dotfiles-aether')
     execute("--", "cp%20-r%20{.*,*}%20~/", "", False)
-    execute("Installing custom icon", "cd%20~/.icons/", "", False)
+    execute("Installing custom icon", "echo", "", False)
+    cd('.icons/', True)
     execute("--", "tar%20-Jxvf%20oomox-aesthetic-light.tar.xz", "", False)
     execute("--", "tar%20-Jxvf%20oomox-aesthetic-dark.tar.xz", "", False)
     execute("-- Copy all custom icons to /usr/share/icons directory",
@@ -60,7 +74,7 @@ def dotfiles():
 
 
 def debian():
-    print(f"{GREEN}INSTALLING DOTFILES DEPENDENCIES${NC}")
+    print(f"{GREEN}INSTALLING DOTFILES DEPENDENCIES{NC}")
     execute("Installing i3-Gaps Window Manager", "echo", "debian", False)
     execute(
         "--", "sudo%20apt-get%20install%20software-properties-common", "debian", True)
@@ -83,7 +97,7 @@ def debian():
     execute('Installing picom compositor', "sudo%20apt%20install%20libxext-dev%20libxcb1-dev%20libxcb-damage0-dev%20libxcb-xfixes0-dev%20libxcb-shape0-dev%20libxcb-render-util0-dev%20libxcb-render0-dev%20libxcb-randr0-dev%20libxcb-composite0-dev%20libxcb-image0-dev%20libxcb-present-dev%20libxcb-xinerama0-dev%20libxcb-glx0-dev%20libpixman-1-dev%20libdbus-1-dev%20libconfig-dev%20libgl1-mesa-dev%20libpcre2-dev%20libevdev-dev%20uthash-dev%20libev-dev%20libx11-xcb-dev%20ninja-build meson", "debian", True)
     execute("-- Clone picom build source",
             "git%20clone%20https://github.com/yshui/picom.git", "debian", False)
-    execute("--", "cd%20picom/", "", False)
+    cd("picom/")
     execute("-- Start building",
             "git%20submodule%20update%20--init%20--recursive", "debian", False)
     execute("--", "meson%20--buildtype=release%20.%20build", "debian", False)
@@ -93,14 +107,14 @@ def debian():
             "echo", "debian", False)
     execute("-- Clone psuinfo from it's repo",
             "git%20clone%20https://github.com/nwg-piotr/psuinfo.git", "debian", False)
-    execute("--", "cd%20psuinfo/", "debian", False)
+    cd('psuinfo/')
     execute("-- Copy psuinfo and icon to /usr/bin directory",
             "sudo%20cp%20-r%20{psuinfo,icons}%20/usr/bin", "debian", False)
     dotfiles()
 
 
 def arch():
-    print(f"{GREEN}INSTALLING DOTFILES DEPENDENCIES${NC}")
+    print(f"{GREEN}INSTALLING DOTFILES DEPENDENCIES{NC}")
     print(f"{RED}Consider install yay AUR helper first if error acquired!{NC}")
     execute("Installing i3-Gaps Window Manager",
             "sudo%20pacman%20-S%20i3-gaps", "arch", True)
