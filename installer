@@ -53,11 +53,9 @@ def cd(dir, home=False):
 def copyAll(src, dst):
     src_files = os.listdir(workingDir + src)
     for file_name in src_files:
-    print(src_files)
-    full_file_name = os.path.join(workingDir + src, file_name)
-    print(full_file_name)
-    if os.path.isfile(full_file_name):
-        shutil.copy(full_file_name, dst)
+        full_file_name = os.path.join(workingDir + src, file_name)
+        if os.path.isfile(full_file_name):
+            shutil.copy(full_file_name, dst)
 
 
 title = f"""{PURPLE}*AETHER DOTFILES INSTALLER*
