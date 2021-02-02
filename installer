@@ -98,6 +98,10 @@ def dotfiles():
         ['sudo', 'cp', '-r', 'oomox-aesthetic-dark', '/usr/share/icons/'])
     execute("-- Delete unnecessary files",
             "rm%20-r%20~/.icons/{oomox-aesthetic-light,oomox-aesthetic-dark,*.tar.xz}", "", False)
+    subprocess.call(
+        ['rm', '-r', 'oomox-aesthetic-light'])
+    subprocess.call(
+        ['rm', '-r', 'oomox-aesthetic-dark'])
     execute("Refresh font cache", "fc-cache%20-rv", "", False)
 
 
