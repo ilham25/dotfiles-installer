@@ -61,6 +61,7 @@ def copyAll(src, dst):
 
 
 def dotsCopy():
+    print(f"{YELLOW}Copy dotfiles to home directory")
     copyAll("dotfiles-aether/", homeDir)
     cd('dotfiles-aether')
     subprocess.call(['cp', '-r', '.config', homeDir])
@@ -96,8 +97,7 @@ def dotfiles():
         ['sudo', 'cp', '-r', 'oomox-aesthetic-light', '/usr/share/icons/'])
     subprocess.call(
         ['sudo', 'cp', '-r', 'oomox-aesthetic-dark', '/usr/share/icons/'])
-    execute("-- Delete unnecessary files",
-            "rm%20-r%20~/.icons/{oomox-aesthetic-light,oomox-aesthetic-dark,*.tar.xz}", "", False)
+    execute("-- Delete unnecessary files", "echo", "", False)
     subprocess.call(
         ['rm', '-r', 'oomox-aesthetic-light'])
     subprocess.call(
