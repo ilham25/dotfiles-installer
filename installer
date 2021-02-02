@@ -60,6 +60,20 @@ def copyAll(src, dst):
             shutil.copy(full_file_name, dst)
 
 
+def dotsCopy():
+    copyAll("dotfiles-aether/", homeDir)
+    cd('dotfiles-aether')
+    subprocess.call(['cp', '-r', '.config', homeDir])
+    subprocess.call(['cp', '-r', '.fonts', homeDir])
+    subprocess.call(['cp', '-r', '.icons', homeDir])
+    subprocess.call(['cp', '-r', '.local', homeDir])
+    subprocess.call(['cp', '-r', '.oh-my-zsh', homeDir])
+    subprocess.call(['cp', '-r', '.scripts', homeDir])
+    subprocess.call(['cp', '-r', '.themes', homeDir])
+    subprocess.call(['cp', '-r', '.urxvt', homeDir])
+    subprocess.call(['cp', '-r', '.wallpaper', homeDir])
+
+
 title = f"""{PURPLE}*AETHER DOTFILES INSTALLER*
 INSTALLER BY ilham25{NC}"""
 selectText = """
@@ -73,8 +87,7 @@ def dotfiles():
     print(f"{GREEN}INSTALLING DOTFILES CONFIG{NC}")
     execute("Clone dotfiles-aether",
             "git%20clone%20https://github.com/ilham25/dotfiles-aether", "", False)
-    cd('dotfiles-aether/')
-    subprocess.call(['cp', '-r', '{.*,*}', homeDir])
+    dotsCopy()
     execute("Installing custom icon", "echo", "", False)
     cd('.icons/', True)
     execute("--", "tar%20-Jxvf%20oomox-aesthetic-light.tar.xz", "", False)
