@@ -20,6 +20,10 @@ UNDERLINE = '\033[4m'
 # WORKING DIRECTORY
 workingDir = os.getcwd() + '/'
 
+# HOME DIRECTORY
+username = getpass.getuser()
+homeDir = f'/home/{username}/'
+
 
 def execute(section, commands, base, ignore):
     splitted = commands.split("%20")
@@ -39,13 +43,21 @@ def execute(section, commands, base, ignore):
 
 def cd(dir, home=False):
     print(f"{YELLOW}Change directory to {dir}")
-    username = getpass.getuser()
-    homeDir = f'/home/{username}/'
 
     if(home == False):
         os.chdir(workingDir + dir)
     else:
         os.chdir(homeDir+dir)
+
+
+def copyAll(src, dst):
+    src_files = os.listdir(workingDir + src)
+    for file_name in src_files:
+    print(src_files)
+    full_file_name = os.path.join(workingDir + src, file_name)
+    print(full_file_name)
+    if os.path.isfile(full_file_name):
+        shutil.copy(full_file_name, dst)
 
 
 title = f"""{PURPLE}*AETHER DOTFILES INSTALLER*
@@ -61,9 +73,7 @@ def dotfiles():
     print(f"{GREEN}INSTALLING DOTFILES CONFIG{NC}")
     execute("Clone dotfiles-aether",
             "git%20clone%20https://github.com/ilham25/dotfiles-aether", "", False)
-    cd('dotfiles-aether')
-    #execute("--", "cp%20-r%20{.*,*}%20~/", "", False)
-    os.system("cp -r {.*,*} ~/")
+    copyAll('dotfiles-aether/', homeDir)
     execute("Installing custom icon", "echo", "", False)
     cd('.icons/', True)
     execute("--", "tar%20-Jxvf%20oomox-aesthetic-light.tar.xz", "", False)
