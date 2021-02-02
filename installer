@@ -52,8 +52,10 @@ def cd(dir, home=False):
 
 def copyAll(src, dst):
     src_files = os.listdir(workingDir + src)
+    print(src_files)
     for file_name in src_files:
         full_file_name = os.path.join(workingDir + src, file_name)
+        print(full_file_name)
         if os.path.isfile(full_file_name):
             shutil.copy(full_file_name, dst)
 
