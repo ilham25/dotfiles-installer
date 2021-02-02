@@ -61,7 +61,7 @@ def copyAll(src, dst):
 
 
 def dotsCopy():
-    print(f"{YELLOW}Copy dotfiles to home directory")
+    print(f"{YELLOW}Copy dotfiles to home directory{NC}")
     copyAll("dotfiles-aether/", homeDir)
     cd('dotfiles-aether')
     subprocess.call(['cp', '-r', '.config', homeDir])
@@ -75,7 +75,15 @@ def dotsCopy():
     subprocess.call(['cp', '-r', '.wallpaper', homeDir])
 
 
-title = f"""{PURPLE}*AETHER DOTFILES INSTALLER*
+title = f"""{PURPLE}
+:::'###::::'########:'########:'##::::'##:'########:'########::
+::'## ##::: ##.....::... ##..:: ##:::: ##: ##.....:: ##.... ##:
+:'##:. ##:: ##:::::::::: ##:::: ##:::: ##: ##::::::: ##:::: ##:
+'##:::. ##: ######:::::: ##:::: #########: ######::: ########::
+ #########: ##...::::::: ##:::: ##.... ##: ##...:::: ##.. ##:::
+ ##.... ##: ##:::::::::: ##:::: ##:::: ##: ##::::::: ##::. ##::
+ ##:::: ##: ########:::: ##:::: ##:::: ##: ########: ##:::. ##:
+..:::::..::........:::::..:::::..:::::..::........::..:::::..::
 INSTALLER BY ilham25{NC}"""
 selectText = """
 Select your linux base :
