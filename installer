@@ -92,8 +92,10 @@ def dotfiles():
     cd('.icons/', True)
     execute("--", "tar%20-Jxvf%20oomox-aesthetic-light.tar.xz", "", False)
     execute("--", "tar%20-Jxvf%20oomox-aesthetic-dark.tar.xz", "", False)
-    execute("-- Copy all custom icons to /usr/share/icons directory",
-            "sudo%20cp%20-r%20{oomox-aesthetic-light,oomox-aesthetic-dark}%20/usr/share/icons/", "", False)
+    subprocess.call(
+        ['sudo', 'cp', '-r', 'oomox-aesthetic-light', '/usr/share/icons/'])
+    subprocess.call(
+        ['sudo', 'cp', '-r', 'oomox-aesthetic-dark', '/usr/share/icons/'])
     execute("-- Delete unnecessary files",
             "rm%20-r%20~/.icons/{oomox-aesthetic-light,oomox-aesthetic-dark,*.tar.xz}", "", False)
     execute("Refresh font cache", "fc-cache%20-rv", "", False)
@@ -120,7 +122,7 @@ def debian():
             'git%20clone%20https://github.com/zsh-users/zsh-syntax-highlighting.git%20${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting', "debian", False)
     execute("-- Plugin install (zsh-autosuggestions)",
             'git%20clone%20https://github.com/zsh-users/zsh-autosuggestions.git%20${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions', "debian", False)
-    execute('Installing picom compositor', "sudo%20apt%20install%20libxext-dev%20libxcb1-dev%20libxcb-damage0-dev%20libxcb-xfixes0-dev%20libxcb-shape0-dev%20libxcb-render-util0-dev%20libxcb-render0-dev%20libxcb-randr0-dev%20libxcb-composite0-dev%20libxcb-image0-dev%20libxcb-present-dev%20libxcb-xinerama0-dev%20libxcb-glx0-dev%20libpixman-1-dev%20libdbus-1-dev%20libconfig-dev%20libgl1-mesa-dev%20libpcre2-dev%20libevdev-dev%20uthash-dev%20libev-dev%20libx11-xcb-dev%20ninja-build%20meson%20libpcre3-dev", "debian", True)
+    execute('Installing picom compositor', "sudo%20apt%20install%20build-essential%20libxext-dev%20libxcb1-dev%20libxcb-damage0-dev%20libxcb-xfixes0-dev%20libxcb-shape0-dev%20libxcb-render-util0-dev%20libxcb-render0-dev%20libxcb-randr0-dev%20libxcb-composite0-dev%20libxcb-image0-dev%20libxcb-present-dev%20libxcb-xinerama0-dev%20libxcb-glx0-dev%20libpixman-1-dev%20libdbus-1-dev%20libconfig-dev%20libgl1-mesa-dev%20libpcre2-dev%20libevdev-dev%20uthash-dev%20libev-dev%20libx11-xcb-dev%20ninja-build%20meson%20libpcre3-dev", "debian", True)
     execute("-- Clone picom build source",
             "git%20clone%20https://github.com/yshui/picom.git", "debian", False)
     cd("picom/")
