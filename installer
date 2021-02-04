@@ -80,9 +80,9 @@ title = f"""{PURPLE}
 ::'## ##::: ##.....::... ##..:: ##:::: ##: ##.....:: ##.... ##:
 :'##:. ##:: ##:::::::::: ##:::: ##:::: ##: ##::::::: ##:::: ##:
 '##:::. ##: ######:::::: ##:::: #########: ######::: ########::
- #########: ##...::::::: ##:::: ##.... ##: ##...:::: ##.. ##:::
- ##.... ##: ##:::::::::: ##:::: ##:::: ##: ##::::::: ##::. ##::
- ##:::: ##: ########:::: ##:::: ##:::: ##: ########: ##:::. ##:
+ # : ##...::::::: ##:::: ##.... ##: ##...:::: ##.. ##:::
+ # .... ##: ##:::::::::: ##:::: ##:::: ##: ##::::::: ##::. ##::
+ # :::: ##: ########:::: ##:::: ##:::: ##: ########: ##:::. ##:
 ..:::::..::........:::::..:::::..:::::..::........::..:::::..::
 INSTALLER BY ilham25{NC}"""
 selectText = """
@@ -113,6 +113,17 @@ def dotfiles():
     execute("Refresh font cache", "fc-cache%20-rv", "", False)
 
 
+def zshInstall():
+    execute("Installing oh-my-zsh & plugins",
+            "sudo%20apt%20install%20zsh", "debian", True)
+    os.system("chsh -s `which zsh`")
+    os.system('sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"')
+    os.system(
+        "git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting")
+    os.system(
+        "git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions")
+
+
 def debian():
     print(f"{GREEN}INSTALLING DOTFILES DEPENDENCIES{NC}")
     execute("Installing i3-Gaps Window Manager", "echo", "debian", False)
@@ -124,16 +135,7 @@ def debian():
     execute("-- Installation",
             'sudo%20apt-get%20install%20i3-gaps-wm%20i3-gaps-session', "debian", True)
     execute("Installing core dependencies", 'sudo%20apt%20install%20feh%20git%20rsync%20python%20psmisc%20wireless-tools%20alsa-utils%20brightnessctl%20nitrogen%20dunst%20tint2%20gsimplecal%20rofi%20lxappearance%20qt5ct%20qt5-style-plugins%20lxpolkit%20xautolock%20rxvt-unicode%20xclip%20scrot%20thunar%20thunar-archive-plugin%20thunar-media-tags-plugin%20thunar-volman%20ffmpegthumbnailer%20tumbler%20w3m%20w3m-img%20geany%20viewnior%20mpv%20mpd%20mpc%20ncmpcpp%20pavucontrol%20parcellite%20neofetch%20htop%20imagemagick%20ffmpeg%20playerctl%20xsettingsd', "debian", True)
-    execute("Installing oh-my-zsh & plugins",
-            "sudo%20apt%20install%20zsh", "debian", True)
-    execute("-- Change default shell to zsh for current user",
-            "chsh%20-s%20/usr/bin/zsh", "debian", False)
-    execute("-- Plugin install (oh-my-zsh)",
-            'sh%20-c%20"$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"', "debian", False)
-    execute("-- Plugin install (zsh-syntax-highlighting)",
-            'git%20clone%20https://github.com/zsh-users/zsh-syntax-highlighting.git%20${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting', "debian", False)
-    execute("-- Plugin install (zsh-autosuggestions)",
-            'git%20clone%20https://github.com/zsh-users/zsh-autosuggestions.git%20${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions', "debian", False)
+    zshInstall()
     execute('Installing picom compositor', "sudo%20apt%20install%20build-essential%20libxext-dev%20libxcb1-dev%20libxcb-damage0-dev%20libxcb-xfixes0-dev%20libxcb-shape0-dev%20libxcb-render-util0-dev%20libxcb-render0-dev%20libxcb-randr0-dev%20libxcb-composite0-dev%20libxcb-image0-dev%20libxcb-present-dev%20libxcb-xinerama0-dev%20libxcb-glx0-dev%20libpixman-1-dev%20libdbus-1-dev%20libconfig-dev%20libgl1-mesa-dev%20libpcre2-dev%20libevdev-dev%20uthash-dev%20libev-dev%20libx11-xcb-dev%20ninja-build%20meson%20libpcre3-dev", "debian", True)
     execute("-- Clone picom build source",
             "git%20clone%20https://github.com/yshui/picom.git", "debian", False)
