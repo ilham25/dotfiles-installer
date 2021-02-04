@@ -174,9 +174,6 @@ def arch():
     execute("Installing git", "sudo pacman -S git", "arch", True)
     execute("Installing other utility (panel, notification, terminal, file manager, etc)",
             "yay -S dunst tint2 gsimplecal rofi feh lxappearance qt5ct qt5-styleplugins lxsession xautolock rxvt-unicode-patched xclip scrot thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman tumbler w3m geany nano vim viewnior pavucontrol parcellite neofetch htop picom-ibhagwan-git gtk2-perl xfce4-power-manager zsh zsh-completions imagemagick playerctl networkmanager-dmenu", "arch", True)
-    execute("Installing oh-my-zsh & plugins", "echo", "arch", False)
-    execute("-- Change default shell to zsh for current user",
-            "chsh -s /usr/bin/zsh", "arch", False)
     dotfiles()
     zshInstall()
 
