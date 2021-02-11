@@ -1,12 +1,7 @@
 # Aether Dotfiles Installer
 
-![SS](https://github.com/ilham25/dotfiles-aether/raw/main/Other/dot.gif)
-
-> **Dependency Required**
-
-```bash
-python3
-```
+![SS](https://github.com/ilham25/dotfiles-aether/raw/main/Other/aether-light.png)
+![SS](https://github.com/ilham25/dotfiles-aether/raw/main/Other/aether-dark.png)
 
 > **How to Use**
 

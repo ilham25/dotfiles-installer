@@ -1,194 +1,72 @@
-#! /usr/bin/env python3
+#!/usr/bin/env bash
 
-import subprocess
-import os
-import getpass
-import shutil
+MAINDIALOG=$(whiptail --title "Aether Desktop Installer" --menu "Pick an option" 10 60 0 \
+    "1." "Debian based dotfiles dependency install" \
+    "2." "Arch based dotfiles dependency install" \
+    "3." "oh-my-zsh & plugin install" \
+    "4." "Dotfiles install" 3>&1 1>&2 2>&3)
 
-# COLORS VARIABLE
-
-PURPLE = '\033[95m'
-BLUE = '\033[94m'
-CYAN = '\033[96m'
-GREEN = '\033[92m'
-YELLOW = '\033[93m'
-RED = '\033[91m'
-NC = '\033[0m'
-BOLD = '\033[1m'
-UNDERLINE = '\033[4m'
-
-# WORKING DIRECTORY
-workingDir = os.getcwd() + '/'
-
-# HOME DIRECTORY
-username = getpass.getuser()
-homeDir = f'/home/{username}/'
-
-
-def execute(section, commands, base, ignore):
-    splitted = commands.split(" ")
-    if ignore == True:
-        if base == "debian":
-            splitted.append("-y")
-        else:
-            splitted.append("--noconfirm")
-
-    print(f"{YELLOW}{section}{NC}")
-    print(splitted)
-    try:
-        subprocess.run(splitted, check=True)
-    except Exception as err:
-        print(f"{RED}Detected some error...{NC}")
-
-
-def cd(dir, home=False):
-    print(f"{YELLOW}Change directory to {dir}")
-
-    if(home == False):
-        os.chdir(workingDir + dir)
-    else:
-        os.chdir(homeDir+dir)
-
-
-def copyAll(src, dst):
-    src_files = os.listdir(workingDir + src)
-    print(src_files)
-    for file_name in src_files:
-        full_file_name = os.path.join(workingDir + src, file_name)
-        print(full_file_name)
-        if os.path.isfile(full_file_name):
-            shutil.copy(full_file_name, dst)
-
-
-def dotsCopy():
-    print(f"{YELLOW}Copy dotfiles to home directory{NC}")
-    copyAll("dotfiles-aether/", homeDir)
-    cd('dotfiles-aether')
-    subprocess.call(['cp', '-r', '.config', homeDir])
-    subprocess.call(['cp', '-r', '.fonts', homeDir])
-    subprocess.call(['cp', '-r', '.icons', homeDir])
-    subprocess.call(['cp', '-r', '.local', homeDir])
-    subprocess.call(['cp', '-r', '.oh-my-zsh', homeDir])
-    subprocess.call(['cp', '-r', '.scripts', homeDir])
-    subprocess.call(['cp', '-r', '.themes', homeDir])
-    subprocess.call(['cp', '-r', '.urxvt', homeDir])
-    subprocess.call(['cp', '-r', '.wallpaper', homeDir])
-
-
-title = f"""{PURPLE}
-:::'###::::'########:'########:'##::::'##:'########:'########::
-::'## ##::: ##.....::... ##..:: ##:::: ##: ##.....:: ##.... ##:
-:'##:. ##:: ##:::::::::: ##:::: ##:::: ##: ##::::::: ##:::: ##:
-'##:::. ##: ######:::::: ##:::: #########: ######::: ########::
- # : ##...::::::: ##:::: ##.... ##: ##...:::: ##.. ##:::
- # .... ##: ##:::::::::: ##:::: ##:::: ##: ##::::::: ##::. ##::
- # :::: ##: ########:::: ##:::: ##:::: ##: ########: ##:::. ##:
-..:::::..::........:::::..:::::..:::::..::........::..:::::..::
-INSTALLER BY ilham25{NC}"""
-selectText = """
-Select your linux base :
-1. Debian Based (Ubuntu, Linux Mint, KDE Neon, Elementary OS, etc)
-2. Arch Based (Artix, Archcraft, Archlabs, Manjaro, etc)
-"""
-
-
-def dotfiles():
-    print(f"{GREEN}INSTALLING DOTFILES CONFIG{NC}")
-    execute("Clone dotfiles-aether",
-            "git clone https://github.com/ilham25/dotfiles-aether", "", False)
-    dotsCopy()
-    execute("Installing custom icon", "echo", "", False)
-    cd('.icons/', True)
-    execute("--", "tar -Jxvf oomox-aesthetic-light.tar.xz", "", False)
-    execute("--", "tar -Jxvf oomox-aesthetic-dark.tar.xz", "", False)
-    subprocess.call(
-        ['sudo', 'cp', '-r', 'oomox-aesthetic-light', '/usr/share/icons/'])
-    subprocess.call(
-        ['sudo', 'cp', '-r', 'oomox-aesthetic-dark', '/usr/share/icons/'])
-    execute("-- Delete unnecessary files", "echo", "", False)
-    subprocess.call(
-        ['rm', '-r', 'oomox-aesthetic-light'])
-    subprocess.call(
-        ['rm', '-r', 'oomox-aesthetic-dark'])
-    execute("Refresh font cache", "fc-cache -rv", "", False)
-
-
-def zshInstall():
-    os.system("chsh -s `which zsh`")
-    os.system('sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"')
-    os.system(
-        "git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting")
-    os.system(
-        "git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions")
-
-
-def debian():
-    print(f"{GREEN}INSTALLING DOTFILES DEPENDENCIES{NC}")
-    execute("Installing i3-Gaps Window Manager", "echo", "debian", False)
-    execute(
-        "--", "sudo apt-get install software-properties-common", "debian", True)
-    execute("-- Add PPA repo for i3-gaps",
-            "sudo add-apt-repository ppa:kgilmer/speed-ricer", "debian", True)
-    execute("-- Update apt", "sudo apt-get update", "debian", True)
-    execute("-- Installation",
-            'sudo apt-get install i3-gaps-wm i3-gaps-session', "debian", True)
-    execute("Installing core dependencies", 'sudo apt install feh git rsync python psmisc wireless-tools alsa-utils brightnessctl nitrogen dunst tint2 gsimplecal rofi lxappearance qt5ct qt5-style-plugins lxpolkit xautolock rxvt-unicode xclip scrot thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman ffmpegthumbnailer tumbler w3m w3m-img geany viewnior mpv mpd mpc ncmpcpp pavucontrol parcellite neofetch htop imagemagick ffmpeg playerctl xsettingsd', "debian", True)
-    execute('Installing picom compositor', "sudo apt install build-essential libxext-dev libxcb1-dev libxcb-damage0-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-render-util0-dev libxcb-render0-dev libxcb-randr0-dev libxcb-composite0-dev libxcb-image0-dev libxcb-present-dev libxcb-xinerama0-dev libxcb-glx0-dev libpixman-1-dev libdbus-1-dev libconfig-dev libgl1-mesa-dev libpcre2-dev libevdev-dev uthash-dev libev-dev libx11-xcb-dev ninja-build meson libpcre3-dev", "debian", True)
-    execute("-- Clone picom build source",
-            "git clone https://github.com/yshui/picom.git", "debian", False)
-    cd("picom/")
-    execute("-- Start building",
-            "git submodule update --init --recursive", "debian", False)
-    execute("--", "meson --buildtype=release . build", "debian", False)
-    execute("--", "ninja -C build", "debian", False)
-    execute("--", "ninja -C build install", "debian", False)
-    execute("Installing psuinfo - Network & CPU Monitor, RAM Usage",
-            "echo", "debian", False)
-    execute('--', 'sudo apt install python3-psutil', 'debian', True)
-    execute("-- Clone psuinfo from it's repo",
-            "git clone https://github.com/nwg-piotr/psuinfo.git", "debian", False)
-    cd('picom/psuinfo/')
-    execute("Copy psuinfo executable to /usr/bin",
-            "sudo cp -r psuinfo /usr/bin", "", False)
-    execute("Copy psuinfo icons to /usr/bin",
-            "sudo cp -r icons /usr/bin", "", False)
-    cd("")
-    dotfiles()
-    execute("Installing oh-my-zsh & plugins",
-            "sudo apt install zsh", "debian", True)
-    zshInstall()
-
-
-def arch():
-    print(f"{GREEN}INSTALLING DOTFILES DEPENDENCIES{NC}")
-    print(f"{RED}Consider install yay AUR helper first if error acquired!{NC}")
-    execute("Installing i3-Gaps Window Manager",
-            "sudo pacman -S i3-gaps", "arch", True)
-    execute("Installing audio",
-            "sudo pacman -S alsa-utils pulseaudio pulseaudio-alsa", "arch", True)
-    execute("Installing brightness", "yay -S brightnessctl", "arch", True)
-    execute("Installing psuinfo - Network & CPU Monitor, RAM Usage",
-            "yay -S psuinfo", "arch", True)
-    execute("Installing wireless tools",
-            "sudo pacman -S wireless_tools", "arch", True)
-    execute("Installing git", "sudo pacman -S git", "arch", True)
-    execute("Installing other utility (panel, notification, terminal, file manager, etc)",
-            "yay -S dunst tint2 gsimplecal rofi feh lxappearance qt5ct qt5-styleplugins lxsession xautolock rxvt-unicode-patched xclip scrot thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman tumbler w3m geany nano vim viewnior pavucontrol parcellite neofetch htop picom-ibhagwan-git gtk2-perl xfce4-power-manager zsh zsh-completions imagemagick playerctl networkmanager-dmenu", "arch", True)
-    dotfiles()
-    zshInstall()
-
-
-options = {
-    1: debian,
-    2: arch,
+debianDependency(){
+    # i3-Gaps Install
+    sudo add-apt-repository ppa:kgilmer/speed-ricer -y
+    sudo apt-get update -y
+    sudo apt-get install i3-gaps-wm i3-gaps-session -y
+    # Other Dependency Install
+    sudo apt install feh git rsync python psmisc wireless-tools alsa-utils brightnessctl nitrogen dunst tint2 gsimplecal rofi lxappearance qt5ct qt5-style-plugins lxpolkit xautolock rxvt-unicode xclip scrot thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman ffmpegthumbnailer tumbler w3m w3m-img geany viewnior mpv mpd mpc ncmpcpp pavucontrol parcellite neofetch htop imagemagick ffmpeg playerctl xsettingsd -y
+    # Picom Dependency Install
+    sudo apt install libxext-dev libxcb1-dev libxcb-damage0-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-render-util0-dev libxcb-render0-dev libxcb-randr0-dev libxcb-composite0-dev libxcb-image0-dev libxcb-present-dev libxcb-xinerama0-dev libxcb-glx0-dev libpixman-1-dev libdbus-1-dev libconfig-dev libgl1-mesa-dev  libpcre2-dev  libevdev-dev uthash-dev libev-dev libpcre3-dev libx11-xcb-dev ninja-build meson -y
+    # Picom build
+    git clone https://github.com/yshui/picom.git && cd picom/
+    git submodule update --init --recursive
+    meson --buildtype=release . build
+    ninja -C build
+    ninja -C build install
+    # Psuinfo Install
+    git clone https://github.com/nwg-piotr/psuinfo.git && cd psuinfo/
+    sudo cp -r {psuinfo,icons} /usr/bin
+    # Zsh Install
+    sudo apt install zsh -y
 }
 
-print(title)
-print(selectText)
-choice = input("Select : ")
+archDependency(){
+    # i3-Gaps Install
+    sudo pacman -S i3-gaps --no-confirm
+    # Audio utilities Install
+    sudo pacman -S alsa-utils pulseaudio pulseaudio-alsa --no-confirm
+    # Brightnessctl Install
+    yay -S brightnessctl --no-confirm
+    # Psuinfo Install
+    yay -S psuinfo --no-confirm
+    # Wireless tools Install
+    sudo pacman -S wireless_tools --no-confirm
+    # Other Dependency Install
+    yay -S dunst tint2 gsimplecal rofi feh lxappearance qt5ct qt5-styleplugins lxsession xautolock rxvt-unicode-patched xclip scrot thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman tumbler w3m geany nano vim viewnior pavucontrol parcellite neofetch htop picom-git gtk2-perl xfce4-power-manager zsh zsh-completions imagemagick playerctl networkmanager-dmenu xsettingsd --no-confirm
+}
 
-try:
-    options[int(choice)]()
-except Exception as err:
-    print(f"{RED}Input error")
-    print(err)
+omzInstall(){
+    chsh -s /usr/bin/zsh
+    sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+    git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+}
+
+dotfilesInstall(){
+    git clone https://github.com/ilham25/dotfiles-aether
+    cd dotfiles-aether/ && cp -r {.*,*} ~/
+    cd ~/.icons/
+    tar -Jxvf oomox-aesthetic-light.tar.xz && tar -Jxvf oomox-aesthetic-dark.tar.xz
+    sudo cp -r {oomox-aesthetic-light,oomox-aesthetic-dark} /usr/share/icons/
+    rm -r ~/.icons/{oomox-aesthetic-light,oomox-aesthetic-dark,*.tar.xz}
+    fc-cache -rv
+}
+
+if [ $MAINDIALOG == "1." ]; then
+    debianDependency
+elif [ $MAINDIALOG == "2." ]; then
+    archDependency
+elif [ $MAINDIALOG == "3." ]; then
+    omzInstall
+elif [ $MAINDIALOG == "4." ]; then
+    dotfilesInstall
+fi
+
