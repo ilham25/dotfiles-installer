@@ -30,17 +30,17 @@ debianDependency(){
 
 archDependency(){
     # i3-Gaps Install
-    sudo pacman -S i3-gaps --no-confirm
+    sudo pacman -S i3-gaps --noconfirm
     # Audio utilities Install
-    sudo pacman -S alsa-utils pulseaudio pulseaudio-alsa --no-confirm
+    sudo pacman -S alsa-utils pulseaudio pulseaudio-alsa --noconfirm
     # Brightnessctl Install
-    yay -S brightnessctl --no-confirm
+    yay -S brightnessctl --noconfirm
     # Psuinfo Install
-    yay -S psuinfo --no-confirm
+    yay -S psuinfo --noconfirm
     # Wireless tools Install
-    sudo pacman -S wireless_tools --no-confirm
+    sudo pacman -S wireless_tools --noconfirm
     # Other Dependency Install
-    yay -S dunst tint2 gsimplecal rofi feh lxappearance qt5ct qt5-styleplugins lxsession xautolock rxvt-unicode-patched xclip scrot thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman tumbler w3m geany nano vim viewnior pavucontrol parcellite neofetch htop picom-git gtk2-perl xfce4-power-manager zsh zsh-completions imagemagick playerctl networkmanager-dmenu xsettingsd --no-confirm
+    yay -S dunst tint2 gsimplecal rofi feh lxappearance qt5ct qt5-styleplugins lxsession xautolock rxvt-unicode-patched xclip scrot thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman tumbler w3m geany nano vim viewnior pavucontrol parcellite neofetch htop picom-git gtk2-perl xfce4-power-manager zsh zsh-completions imagemagick playerctl networkmanager-dmenu xsettingsd --noconfirm
 }
 
 omzInstall(){
