@@ -60,16 +60,18 @@ dotfilesInstall(){
     fc-cache -rv
 }
 
-if [ $MAINDIALOG = "1." ]; then
+if [[ $MAINDIALOG = "1." ]]; then
     debianDependency
     ./installer
-elif [ $MAINDIALOG = "2." ]; then
+elif [[ $MAINDIALOG = "2." ]]; then
     archDependency
     ./installer
-elif [ $MAINDIALOG = "3." ]; then
+elif [[ $MAINDIALOG = "3." ]]; then
     omzInstall
     ./installer
-elif [ $MAINDIALOG = "4." ]; then
+elif [[ $MAINDIALOG = "4." ]]; then
     dotfilesInstall
     ./installer
 fi
+
+> /dev/null
