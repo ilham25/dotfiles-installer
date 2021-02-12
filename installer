@@ -1,8 +1,23 @@
 #!/usr/bin/env bash
 while true; do
-    MAINDIALOG=$(whiptail --title "Aether Desktop Installer" --menu "Pick an option" 10 60 0 \
+
+    # DIALOG COLORS
+    export NEWT_COLORS="
+    root=,magenta
+    shadow=,white
+    textbox=red,black
+    window=,black
+    border=red,black
+    listbox=black,red
+    actlistbox=red,black
+    actsellistbox=red,lightgray
+    button=black,red
+    title=black,red"
+
+    
+    MAINDIALOG=$(whiptail --title "Aether Desktop Installer" --menu "Pick an option" 10 80 0 \
         "1." "Debian based dotfiles dependency install" \
-        "2." "Arch based dotfiles dependency install" \
+        "2." "Arch based dotfiles dependency install (Need yay AUR helper)" \
         "3." "oh-my-zsh & plugin install" \
         "4." "Dotfiles install" 3>&1 1>&2 2>&3)
 
