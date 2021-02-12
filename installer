@@ -3,7 +3,7 @@ while true; do
 
     # DIALOG COLORS
     export NEWT_COLORS="
-    root=,magenta
+    root=,black
     shadow=,white
     textbox=red,black
     window=,black
