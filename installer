@@ -17,12 +17,12 @@ while true; do
     MAINDIALOG=$(whiptail --title "Aether Desktop Installer" --menu "Pick an option" 10 80 0 \
         "1." "Debian based dotfiles dependency install" \
         "2." "Arch based dotfiles dependency install (Need yay AUR helper)" \
-        "3." "oh-my-zsh & plugin install" \
-        "4." "Dotfiles install" 3>&1 1>&2 2>&3)
+        "3." "Dotfiles install" \
+        "4." "oh-my-zsh & plugin install (optional)" 3>&1 1>&2 2>&3)
 
     debianDependency(){
-	# Update Repository
-	sudo apt-get update -y
+	    # Update Repository
+	    sudo apt-get update -y
         # i3-Gaps Install
         sudo apt-get install software-properties-common -y
         sudo add-apt-repository ppa:kgilmer/speed-ricer -y
@@ -61,7 +61,7 @@ while true; do
     }
 
     omzInstall(){
-        chsh -s /usr/bin/zsh
+        chsh -s `which zsh`
         sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
         git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
         git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
@@ -84,9 +84,9 @@ while true; do
         elif [[ $MAINDIALOG = "2." ]]; then
             archDependency
         elif [[ $MAINDIALOG = "3." ]]; then
-            omzInstall
-        elif [[ $MAINDIALOG = "4." ]]; then
             dotfilesInstall
+        elif [[ $MAINDIALOG = "4." ]]; then
+            omzInstall
         else 
             break
         fi
