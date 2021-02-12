@@ -21,6 +21,8 @@ while true; do
         "4." "Dotfiles install" 3>&1 1>&2 2>&3)
 
     debianDependency(){
+	# Update Repository
+	sudo apt-get update -y
         # i3-Gaps Install
         sudo apt-get install software-properties-common -y
         sudo add-apt-repository ppa:kgilmer/speed-ricer -y
