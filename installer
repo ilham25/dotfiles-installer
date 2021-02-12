@@ -15,10 +15,19 @@ while true; do
     title=black,red"
     
     MAINDIALOG=$(whiptail --title "Aether Desktop Installer" --menu "Pick an option" 10 80 0 \
-        "1." "Debian based dotfiles dependency install" \
-        "2." "Arch based dotfiles dependency install (Need yay AUR helper)" \
-        "3." "Dotfiles install" \
-        "4." "oh-my-zsh & plugin install (optional)" 3>&1 1>&2 2>&3)
+        "1." "[Debian based] Dotfiles install" \
+        "2." "[Arch based] Dotfiles install - require yay AUR helper" \
+        "3." "oh-my-zsh & plugin install (optional)" 3>&1 1>&2 2>&3)
+
+    dotfilesInstall(){
+        git clone https://github.com/ilham25/dotfiles-aether
+        cd dotfiles-aether/ && cp -r {.*,*} ~/
+        cd ~/.icons/
+        tar -Jxvf oomox-aesthetic-light.tar.xz && tar -Jxvf oomox-aesthetic-dark.tar.xz
+        sudo cp -r {oomox-aesthetic-light,oomox-aesthetic-dark} /usr/share/icons/
+        rm -r ~/.icons/{oomox-aesthetic-light,oomox-aesthetic-dark,*.tar.xz}
+        fc-cache -rv
+    }
 
     debianDependency(){
 	    # Update Repository
@@ -41,8 +50,15 @@ while true; do
         # Psuinfo Install
         git clone https://github.com/nwg-piotr/psuinfo.git && cd psuinfo/
         sudo cp -r {psuinfo,icons} /usr/bin
+        # networkmanager-dmenu Install
+        https://github.com/firecat53/networkmanager-dmenu.git && cd networkmanager-dmenu/
+        sudo cp networkmanager_dmenu /usr/bin
         # Zsh Install
         sudo apt install zsh -y
+
+        # ================== #
+        # Dotfiles Install
+        dotfilesInstall
     }
 
     archDependency(){
@@ -58,6 +74,10 @@ while true; do
         sudo pacman -S wireless_tools --noconfirm
         # Other Dependency Install
         yay -S dunst tint2 gsimplecal rofi jq feh lxappearance qt5ct qt5-styleplugins lxsession xautolock rxvt-unicode-patched xclip scrot thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman tumbler w3m geany nano vim viewnior pavucontrol parcellite neofetch htop picom-git gtk2-perl xfce4-power-manager zsh zsh-completions imagemagick playerctl networkmanager-dmenu xsettingsd --noconfirm
+        
+        # ================== #
+        # Dotfiles Install
+        dotfilesInstall
     }
 
     omzInstall(){
@@ -67,15 +87,6 @@ while true; do
         git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
     }
 
-    dotfilesInstall(){
-        git clone https://github.com/ilham25/dotfiles-aether
-        cd dotfiles-aether/ && cp -r {.*,*} ~/
-        cd ~/.icons/
-        tar -Jxvf oomox-aesthetic-light.tar.xz && tar -Jxvf oomox-aesthetic-dark.tar.xz
-        sudo cp -r {oomox-aesthetic-light,oomox-aesthetic-dark} /usr/share/icons/
-        rm -r ~/.icons/{oomox-aesthetic-light,oomox-aesthetic-dark,*.tar.xz}
-        fc-cache -rv
-    }
 
     EXITCODE="$?"
     if [[ $EXITCODE == "0" ]]; then
@@ -84,8 +95,6 @@ while true; do
         elif [[ $MAINDIALOG = "2." ]]; then
             archDependency
         elif [[ $MAINDIALOG = "3." ]]; then
-            dotfilesInstall
-        elif [[ $MAINDIALOG = "4." ]]; then
             omzInstall
         else 
             break
