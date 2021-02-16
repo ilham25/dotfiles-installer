@@ -14,14 +14,27 @@ while true; do
     button=black,red
     title=black,red"
     
-    MAINDIALOG=$(whiptail --title "Aether Desktop Installer" --menu "Pick an option" 10 80 0 \
+    MAINDIALOG=$(whiptail --title "Aether Desktop Installer" --menu "Pick an option" 12 80 0 \
         "1." "[Debian based] Dotfiles install" \
-        "2." "[Arch based] Dotfiles install - require yay AUR helper" \
-        "3." "oh-my-zsh & plugin install (optional)" 3>&1 1>&2 2>&3)
+        "2." "[Arch based] Dotfiles install - require yay AUR helper    " \
+        "3." "oh-my-zsh & plugin install (optional)" \
+        "4." "Dotfiles Update" 3>&1 1>&2 2>&3)
 
     dotfilesInstall(){
-        git clone https://github.com/ilham25/dotfiles-aether
-        cd dotfiles-aether/ && cp -r {.*,*} ~/
+        if [[ "$1" = "update" ]]; then
+            if [[ -d dotfiles-aether ]]; then
+                cd dotfiles-aether/
+                git pull
+            else 
+                git clone https://github.com/ilham25/dotfiles-aether
+                cd dotfiles-aether/
+            fi
+        else 
+            [[ ! -d dotfiles-aether ]] && git clone https://github.com/ilham25/dotfiles-aether
+            cd dotfiles-aether/
+        fi
+
+        cp -r {.*,*} ~/
         cd ~/.icons/
         tar -Jxvf oomox-aesthetic-light.tar.xz && tar -Jxvf oomox-aesthetic-dark.tar.xz
         sudo cp -r {oomox-aesthetic-light,oomox-aesthetic-dark} /usr/share/icons/
@@ -42,16 +55,19 @@ while true; do
         # Picom Dependency Install
         sudo apt install build-essential libxext-dev libxcb1-dev libxcb-damage0-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-render-util0-dev libxcb-render0-dev libxcb-randr0-dev libxcb-composite0-dev libxcb-image0-dev libxcb-present-dev libxcb-xinerama0-dev libxcb-glx0-dev libpixman-1-dev libdbus-1-dev libconfig-dev libgl1-mesa-dev  libpcre2-dev  libevdev-dev uthash-dev libev-dev libpcre3-dev libx11-xcb-dev ninja-build meson -y
         # Picom build
-        git clone https://github.com/yshui/picom.git && cd picom/
+        [[ ! -d picom ]] && git clone https://github.com/yshui/picom.git
+        cd picom/
         git submodule update --init --recursive
         meson --buildtype=release . build
         ninja -C build
         ninja -C build install
         # Psuinfo Install
-        git clone https://github.com/nwg-piotr/psuinfo.git && cd psuinfo/
+        [[ ! -d psuinfo ]] && git clone https://github.com/nwg-piotr/psuinfo.git
+        cd psuinfo/
         sudo cp -r {psuinfo,icons} /usr/bin
         # networkmanager-dmenu Install
-        https://github.com/firecat53/networkmanager-dmenu.git && cd networkmanager-dmenu/
+        [[ ! -d networkmanager-dmenu ]] && https://github.com/firecat53/networkmanager-dmenu.git
+        cd networkmanager-dmenu/
         sudo cp networkmanager_dmenu /usr/bin
         # Zsh Install
         sudo apt install zsh -y
@@ -96,6 +112,8 @@ while true; do
             archDependency
         elif [[ $MAINDIALOG = "3." ]]; then
             omzInstall
+        elif [[ $MAINDIALOG = "4." ]]; then
+            dotfilesInstall update
         else 
             break
         fi
