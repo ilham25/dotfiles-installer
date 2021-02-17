@@ -85,7 +85,7 @@ while true; do
         # Brightnessctl Install
         yay -S brightnessctl --noconfirm
         # Psuinfo Install
-        yay -S psuinfo python3-psutil --noconfirm
+        yay -S psuinfo --noconfirm
         # Wireless tools Install
         sudo pacman -S wireless_tools --noconfirm
         # Other Dependency Install
