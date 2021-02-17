@@ -24,7 +24,7 @@ while true; do
         if [[ "$1" = "update" ]]; then
             if [[ -d dotfiles-aether ]]; then
                 cd dotfiles-aether/
-                git pull
+                git fetch
             else 
                 git clone https://github.com/ilham25/dotfiles-aether
                 cd dotfiles-aether/
