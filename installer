@@ -21,6 +21,8 @@ while true; do
         "4." "Dotfiles Update" 3>&1 1>&2 2>&3)
 
     dotfilesInstall(){
+        [[ ! -d ~/.cache ]] && mkdir ~/.cache
+        cd ~/.cache
         if [[ "$1" = "update" ]]; then
             if [[ -d dotfiles-aether ]]; then
                 cd dotfiles-aether/
@@ -35,6 +37,8 @@ while true; do
         fi
 
         cp -r {.*,*} ~/
+        # Delete unnecessary in home directory
+        rm -r ~/{README.md,LICENSE,.git}
         cd ~/.icons/
         tar -Jxvf oomox-aesthetic-light.tar.xz && tar -Jxvf oomox-aesthetic-dark.tar.xz
         sudo cp -r {oomox-aesthetic-light,oomox-aesthetic-dark} /usr/share/icons/
@@ -54,6 +58,8 @@ while true; do
         sudo apt install feh git rsync jq python python3-psutil psmisc wireless-tools alsa-utils brightnessctl nitrogen dunst tint2 gsimplecal rofi lxappearance qt5ct qt5-style-plugins lxpolkit xautolock rxvt-unicode xclip scrot thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman ffmpegthumbnailer tumbler w3m w3m-img geany viewnior mpv mpd mpc ncmpcpp pavucontrol parcellite neofetch htop imagemagick ffmpeg playerctl xsettingsd -y
         # Picom Dependency Install
         sudo apt install build-essential libxext-dev libxcb1-dev libxcb-damage0-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-render-util0-dev libxcb-render0-dev libxcb-randr0-dev libxcb-composite0-dev libxcb-image0-dev libxcb-present-dev libxcb-xinerama0-dev libxcb-glx0-dev libpixman-1-dev libdbus-1-dev libconfig-dev libgl1-mesa-dev  libpcre2-dev  libevdev-dev uthash-dev libev-dev libpcre3-dev libx11-xcb-dev ninja-build meson -y
+        # Change to /tmp directory
+        cd /tmp
         # Picom build
         [[ ! -d picom ]] && git clone https://github.com/yshui/picom.git
         cd picom/
