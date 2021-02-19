@@ -89,7 +89,7 @@ while true; do
         # Wireless tools Install
         sudo pacman -S wireless_tools --noconfirm
         # Other Dependency Install
-        yay -S dunst tint2 gsimplecal rofi jq feh lxappearance qt5ct qt5-styleplugins lxsession xautolock rxvt-unicode-patched xclip scrot thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman tumbler w3m geany nano vim viewnior pavucontrol parcellite neofetch htop picom-git gtk2-perl xfce4-power-manager zsh zsh-completions imagemagick playerctl networkmanager-dmenu xsettingsd --noconfirm
+        yay -S dunst tint2 gsimplecal rofi jq feh lxsession lxappearance qt5ct qt5-styleplugins lxsession xautolock rxvt-unicode-patched xclip scrot thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman tumbler w3m geany nano vim viewnior pavucontrol parcellite neofetch htop picom-git gtk2-perl xfce4-power-manager zsh zsh-completions imagemagick playerctl networkmanager-dmenu xsettingsd --noconfirm
         
         # ================== #
         # Dotfiles Install
