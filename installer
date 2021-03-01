@@ -56,7 +56,7 @@ while true; do
             sleep 0.5
             echo -e "XXX\n50\nRemove unnecessary file... \nXXX"
                 # Delete unnecessary in home directory
-                rm -r ~/{README.md,LICENSE,.git} &>/dev/null
+                yes | rm -r ~/{README.md,LICENSE,.git} &>/dev/null
             sleep 2
             echo -e "XXX\n70\nRemove unnecessary file... Done.\nXXX"
                    
