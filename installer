@@ -2,17 +2,17 @@
 while true; do
 
     # DIALOG COLORS
-    export NEWT_COLORS="
-    root=,black
-    shadow=,white
-    textbox=red,black
-    window=,black
-    border=red,black
-    listbox=black,red
-    actlistbox=red,black
-    actsellistbox=red,lightgray
-    button=black,red
-    title=black,red"
+    # export NEWT_COLORS="
+    # root=,black
+    # shadow=,white
+    # textbox=red,black
+    # window=,black
+    # border=red,black
+    # listbox=black,red
+    # actlistbox=red,black
+    # actsellistbox=red,lightgray
+    # button=black,red
+    # title=black,red"
     
     MAINDIALOG=$(whiptail --title "Aether Desktop Installer" --menu "Pick an option" 12 80 0 \
         "1." "[Debian based] Dotfiles install" \
