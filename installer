@@ -21,62 +21,138 @@ while true; do
         "4." "Dotfiles Update" 3>&1 1>&2 2>&3)
 
     dotfilesInstall(){
-        [[ ! -d ~/.cache ]] && mkdir ~/.cache
-        cd ~/.cache
-        if [[ "$1" = "update" ]]; then
-            if [[ -d dotfiles-aether ]]; then
-                cd dotfiles-aether/
-                git fetch
-            else 
-                git clone https://github.com/ilham25/dotfiles-aether
-                cd dotfiles-aether/
-            fi
-        else 
-            [[ ! -d dotfiles-aether ]] && git clone https://github.com/ilham25/dotfiles-aether
-            cd dotfiles-aether/
-        fi
+        sudo touch &>/dev/null
+        {
+            sleep 0.5
+            echo -e "XXX\n25\nChange Directory to ~/.cache... \nXXX"
+                [[ ! -d ~/.cache ]] && mkdir ~/.cache &>/dev/null
+                cd ~/.cache &>/dev/null &>/dev/null
+            sleep 2
+            echo -e "XXX\n50\nChange Directory to ~/.cache... Done.\nXXX"
+          
+            sleep 0.5
+            echo -e "XXX\n0\nCloning Dotfiles Repository... \nXXX"
+                if [[ "$1" = "update" ]]; then
+                    if [[ -d dotfiles-aether ]]; then
+                        cd dotfiles-aether/ &>/dev/null
+                        git fetch &>/dev/null
+                    else 
+                        git clone https://github.com/ilham25/dotfiles-aether &>/dev/null
+                        cd dotfiles-aether/ &>/dev/null
+                    fi
+                else 
+                    [[ ! -d dotfiles-aether ]] && git clone https://github.com/ilham25/dotfiles-aether &>/dev/null
+                    cd dotfiles-aether/ &>/dev/null
+                fi
+            sleep 2
+            echo -e "XXX\n25\nCloning Dotfiles Repository... Done.\nXXX"
+            
+            sleep 0.5
+            echo -e "XXX\n25\nCopying all dotfiles config... \nXXX"
+                cp -r {.*,*} ~/ &>/dev/null
+            sleep 2
+            echo -e "XXX\n50\nCopying all dotfiles config... Done.\nXXX"
+            
+            sleep 0.5
+            echo -e "XXX\n50\nRemove unnecessary file... \nXXX"
+                # Delete unnecessary in home directory
+                rm -r ~/{README.md,LICENSE,.git} &>/dev/null
+            sleep 2
+            echo -e "XXX\n75\nRemove unnecessary file... Done.\nXXX"
+                   
+            sleep 0.5
+            echo -e "XXX\n50\nInstalling icons... \nXXX"
+                cd ~/.icons/ &>/dev/null
+                tar -Jxvf oomox-aesthetic-light.tar.xz && tar -Jxvf oomox-aesthetic-dark.tar.xz &>/dev/null
+                sudo cp -r {oomox-aesthetic-light,oomox-aesthetic-dark} /usr/share/icons/ &>/dev/null
+                rm -r ~/.icons/{oomox-aesthetic-light,oomox-aesthetic-dark,*.tar.xz} &>/dev/null
+            sleep 2
+            echo -e "XXX\n75\nInstalling icons... Done.\nXXX"
+            
+            sleep 0.5
+            echo -e "XXX\n75\nRefreshing font cache... \nXXX"
+                fc-cache -rv &>/dev/null
+            sleep 2
+            echo -e "XXX\n100\nRefreshing font cache... Done.\nXXX"
+            sleep 1
+        } | whiptail --title "Yum Removal" --gauge "Please wait while installing" 12 80 0
 
-        cp -r {.*,*} ~/
-        # Delete unnecessary in home directory
-        rm -r ~/{README.md,LICENSE,.git}
-        cd ~/.icons/
-        tar -Jxvf oomox-aesthetic-light.tar.xz && tar -Jxvf oomox-aesthetic-dark.tar.xz
-        sudo cp -r {oomox-aesthetic-light,oomox-aesthetic-dark} /usr/share/icons/
-        rm -r ~/.icons/{oomox-aesthetic-light,oomox-aesthetic-dark,*.tar.xz}
-        fc-cache -rv
     }
 
     debianDependency(){
-	    # Update Repository
-	    sudo apt-get update -y
-        # i3-Gaps Install
-        sudo apt-get install software-properties-common -y
-        sudo add-apt-repository ppa:kgilmer/speed-ricer -y
-        sudo apt-get update -y
-        sudo apt-get install i3-gaps-wm i3-gaps-session -y
-        # Other Dependency Install
-        sudo apt install feh git rsync jq python python3-psutil psmisc wireless-tools alsa-utils brightnessctl nitrogen dunst tint2 gsimplecal rofi lxappearance qt5ct qt5-style-plugins lxpolkit xautolock rxvt-unicode xclip scrot thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman ffmpegthumbnailer tumbler w3m w3m-img geany viewnior mpv mpd mpc ncmpcpp pavucontrol parcellite neofetch htop imagemagick ffmpeg playerctl xsettingsd -y
-        # Picom Dependency Install
-        sudo apt install build-essential libxext-dev libxcb1-dev libxcb-damage0-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-render-util0-dev libxcb-render0-dev libxcb-randr0-dev libxcb-composite0-dev libxcb-image0-dev libxcb-present-dev libxcb-xinerama0-dev libxcb-glx0-dev libpixman-1-dev libdbus-1-dev libconfig-dev libgl1-mesa-dev  libpcre2-dev  libevdev-dev uthash-dev libev-dev libpcre3-dev libx11-xcb-dev ninja-build meson -y
-        # Change to /tmp directory
-        cd /tmp
-        # Picom build
-        [[ ! -d picom ]] && git clone https://github.com/yshui/picom.git
-        cd picom/
-        git submodule update --init --recursive
-        meson --buildtype=release . build
-        ninja -C build
-        ninja -C build install
-        # Psuinfo Install
-        [[ ! -d psuinfo ]] && git clone https://github.com/nwg-piotr/psuinfo.git
-        cd psuinfo/
-        sudo cp -r {psuinfo,icons} /usr/bin
-        # networkmanager-dmenu Install
-        [[ ! -d networkmanager-dmenu ]] && git clone https://github.com/firecat53/networkmanager-dmenu.git
-        cd networkmanager-dmenu/
-        sudo cp networkmanager_dmenu /usr/bin
-        # Zsh Install
-        sudo apt install zsh -y
+        sudo touch &>/dev/null
+        {
+            sleep 0.5
+            echo -e "XXX\n0\nUpdating Package Manager... \nXXX"
+            	# Update Repository
+	            sudo apt-get update -y &>/dev/null
+            sleep 2
+            echo -e "XXX\n25\nUpdating Package Manager... Done.\nXXX"
+            
+            sleep 0.5
+            echo -e "XXX\n25\ni3-Gaps Install... \nXXX"
+                # i3-Gaps Install
+                sudo apt-get install software-properties-common -y &>/dev/null
+                sudo add-apt-repository ppa:kgilmer/speed-ricer -y &>/dev/null
+                sudo apt-get update -y &>/dev/null
+                sudo apt-get install i3-gaps-wm i3-gaps-session -y &>/dev/null
+            sleep 2
+            echo -e "XXX\n50\ni3-Gaps Install... Done.\nXXX"
+            
+            sleep 0.5
+            echo -e "XXX\n50\nOther Dependency Install... \nXXX"
+                # Other Dependency Install
+                sudo apt install feh git rsync jq python python3-psutil psmisc wireless-tools alsa-utils brightnessctl nitrogen dunst tint2 gsimplecal rofi lxappearance qt5ct qt5-style-plugins lxpolkit xautolock rxvt-unicode xclip scrot thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman ffmpegthumbnailer tumbler w3m w3m-img geany viewnior mpv mpd mpc ncmpcpp pavucontrol parcellite neofetch htop imagemagick ffmpeg playerctl xsettingsd -y &>/dev/null
+            sleep 2
+            echo -e "XXX\n75\nOther Dependency Install... Done.\nXXX"
+            
+            sleep 0.5
+            echo -e "XXX\n50\nPicom Dependency Install... \nXXX"
+                # Picom Dependency Install
+                sudo apt install build-essential libxext-dev libxcb1-dev libxcb-damage0-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-render-util0-dev libxcb-render0-dev libxcb-randr0-dev libxcb-composite0-dev libxcb-image0-dev libxcb-present-dev libxcb-xinerama0-dev libxcb-glx0-dev libpixman-1-dev libdbus-1-dev libconfig-dev libgl1-mesa-dev  libpcre2-dev  libevdev-dev uthash-dev libev-dev libpcre3-dev libx11-xcb-dev ninja-build meson -y &>/dev/null
+            sleep 2
+            echo -e "XXX\n75\nPicom Dependency Install... Done.\nXXX"
+            
+            sleep 0.5
+            echo -e "XXX\n50\nPicom Build... \nXXX"
+                # Change to /tmp directory
+                cd /tmp &>/dev/null
+                # Picom build
+                [[ ! -d picom ]] && git clone https://github.com/yshui/picom.git &>/dev/null
+                cd picom/ &>/dev/null
+                git submodule update --init --recursive &>/dev/null
+                meson --buildtype=release . build &>/dev/null
+                ninja -C build &>/dev/null
+                ninja -C build install &>/dev/null
+            sleep 2
+            echo -e "XXX\n75\nPicom Build... Done.\nXXX"
+            
+            sleep 0.5
+            echo -e "XXX\n50\nPsuinfo Install... \nXXX"
+                # Psuinfo Install
+                [[ ! -d psuinfo ]] && git clone https://github.com/nwg-piotr/psuinfo.git &>/dev/null
+                cd psuinfo/ &>/dev/null
+                sudo cp -r {psuinfo,icons} /usr/bin &>/dev/null
+            sleep 2
+            echo -e "XXX\n75\nPsuinfo Install... Done.\nXXX"
+            
+            sleep 0.5
+            echo -e "XXX\n50\nNetworkManager-dmenu Install... \nXXX"
+                # networkmanager-dmenu Install
+                [[ ! -d networkmanager-dmenu ]] && git clone https://github.com/firecat53/networkmanager-dmenu.git &>/dev/null
+                cd networkmanager-dmenu/ &>/dev/null
+                sudo cp networkmanager_dmenu /usr/bin &>/dev/null
+            sleep 2
+            echo -e "XXX\n75\nNetworkManager-dmenu Install... Done.\nXXX"
+            
+            sleep 0.5
+            echo -e "XXX\n50\nZsh Install... \nXXX"
+                # Zsh Install
+                sudo apt install zsh -y &>/dev/null
+            sleep 2
+            echo -e "XXX\n75\nZsh Install... Done.\nXXX"
+            sleep 1
+        } |whiptail --title "[Debian based] Dotfiles install" --gauge "Please wait while installing" 12 80 0
 
         # ================== #
         # Dotfiles Install
@@ -84,19 +160,52 @@ while true; do
     }
 
     archDependency(){
-        # i3-Gaps Install
-        sudo pacman -S i3-gaps --noconfirm
-        # Audio utilities Install
-        sudo pacman -S alsa-utils pulseaudio pulseaudio-alsa --noconfirm
-        # Brightnessctl Install
-        yay -S brightnessctl --noconfirm
-        # Psuinfo Install
-        yay -S psuinfo --noconfirm
-        # Wireless tools Install
-        sudo pacman -S wireless_tools --noconfirm
-        # Other Dependency Install
-        yay -S dunst tint2 gsimplecal rofi jq feh lxsession lxappearance qt5ct qt5-styleplugins lxsession xautolock rxvt-unicode-patched xclip scrot thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman tumbler w3m geany nano vim viewnior pavucontrol parcellite neofetch htop picom-git gtk2-perl xfce4-power-manager zsh zsh-completions imagemagick playerctl networkmanager-dmenu xsettingsd --noconfirm
-        
+        sudo touch &>/dev/null
+        {
+            sleep 0.5
+            echo -e "XXX\n0\ni3-Gaps Install... \nXXX"
+                # i3-Gaps Install
+                sudo pacman -S i3-gaps --noconfirm &>/dev/null
+            sleep 2
+            echo -e "XXX\n25\ni3-Gaps Install... Done.\nXXX"
+            
+            sleep 0.5
+            echo -e "XXX\n25\nyAudio Utilities Install... \nXXX"
+                # Audio utilities Install
+                sudo pacman -S alsa-utils pulseaudio pulseaudio-alsa --noconfirm &>/dev/null
+            sleep 2
+            echo -e "XXX\n50\nyAudio Utilities Install... Done.\nXXX"
+            
+            sleep 0.5
+            echo -e "XXX\n25\nBrigntessctl Install... \nXXX"
+                # Brightnessctl Install
+                yay -S brightnessctl --noconfirm &>/dev/null
+            sleep 2
+            echo -e "XXX\n50\nBrigntessctl Install... Done.\nXXX"
+            
+            sleep 0.5
+            echo -e "XXX\n25\nPsuinfo Install... \nXXX"
+                # Psuinfo Install
+                yay -S psuinfo --noconfirm &>/dev/null
+            sleep 2
+            echo -e "XXX\n50\nPsuinfo Install... Done.\nXXX"
+            
+            sleep 0.5
+            echo -e "XXX\n50\nWireless Tools Install... \nXXX"
+                # Wireless tools Install
+                sudo pacman -S wireless_tools --noconfirm &>/dev/null
+            sleep 2
+            echo -e "XXX\n75\nWireless Tools Install... Done.\nXXX"
+            sleep 0.5
+
+            echo -e "XXX\n75\nOther Dependency Install... \nXXX"
+                # Other Dependency Install
+                yay -S dunst tint2 gsimplecal rofi jq feh lxsession lxappearance qt5ct qt5-styleplugins lxsession xautolock rxvt-unicode-patched xclip scrot thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman tumbler w3m geany nano vim viewnior pavucontrol parcellite neofetch htop picom-git gtk2-perl xfce4-power-manager zsh zsh-completions imagemagick playerctl networkmanager-dmenu xsettingsd --noconfirm &>/dev/null
+            sleep 2
+            echo -e "XXX\n100\nOther Dependency Install... Done.\nXXX"
+            sleep 1
+        } | whiptail --title "[Arch based] Dotfiles install" --gauge "Please wait while installing" 12 80 0
+
         # ================== #
         # Dotfiles Install
         dotfilesInstall
@@ -109,6 +218,30 @@ while true; do
         git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
     }
 
+    tes(){
+         {
+            sleep 0.5
+            echo -e "XXX\n0\nyum remove package_0... \nXXX"
+            sleep 2
+            echo -e "XXX\n25\nyum remove package_0... Done.\nXXX"
+            sleep 0.5
+
+            echo -e "XXX\n25\nyum remove package_1... \nXXX"
+            sleep 2
+            echo -e "XXX\n50\nyum remove package_1... Done.\nXXX"
+            sleep 0.5
+
+            echo -e "XXX\n50\nyum remove package_2... \nXXX"
+            sleep 2
+            echo -e "XXX\n75\nyum remove package_2... Done.\nXXX"
+            sleep 0.5
+
+            echo -e "XXX\n75\nyum remove package_3... \nXXX"
+            sleep 2
+            echo -e "XXX\n100\nyum remove package_3... Done.\nXXX"
+            sleep 1
+        } | whiptail --title "Yum Removal" --gauge "Please wait while installing" 6 60 0
+    }
 
     EXITCODE="$?"
     if [[ $EXITCODE == "0" ]]; then
