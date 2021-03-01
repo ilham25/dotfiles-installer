@@ -24,11 +24,11 @@ while true; do
         sudo touch &>/dev/null
         {
             sleep 0.5
-            echo -e "XXX\n25\nChange Directory to ~/.cache... \nXXX"
+            echo -e "XXX\n0\nChange Directory to ~/.cache... \nXXX"
                 [[ ! -d ~/.cache ]] && mkdir ~/.cache &>/dev/null
                 cd ~/.cache &>/dev/null &>/dev/null
             sleep 2
-            echo -e "XXX\n50\nChange Directory to ~/.cache... Done.\nXXX"
+            echo -e "XXX\n0\nChange Directory to ~/.cache... Done.\nXXX"
           
             sleep 0.5
             echo -e "XXX\n0\nCloning Dotfiles Repository... \nXXX"
@@ -45,10 +45,10 @@ while true; do
                     cd dotfiles-aether/ &>/dev/null
                 fi
             sleep 2
-            echo -e "XXX\n25\nCloning Dotfiles Repository... Done.\nXXX"
+            echo -e "XXX\n40\nCloning Dotfiles Repository... Done.\nXXX"
             
             sleep 0.5
-            echo -e "XXX\n25\nCopying all dotfiles config... \nXXX"
+            echo -e "XXX\n40\nCopying all dotfiles config... \nXXX"
                 cp -r {.*,*} ~/ &>/dev/null
             sleep 2
             echo -e "XXX\n50\nCopying all dotfiles config... Done.\nXXX"
@@ -58,24 +58,24 @@ while true; do
                 # Delete unnecessary in home directory
                 rm -r ~/{README.md,LICENSE,.git} &>/dev/null
             sleep 2
-            echo -e "XXX\n75\nRemove unnecessary file... Done.\nXXX"
+            echo -e "XXX\n70\nRemove unnecessary file... Done.\nXXX"
                    
             sleep 0.5
-            echo -e "XXX\n50\nInstalling icons... \nXXX"
+            echo -e "XXX\n70\nInstalling icons... \nXXX"
                 cd ~/.icons/ &>/dev/null
                 tar -Jxvf oomox-aesthetic-light.tar.xz && tar -Jxvf oomox-aesthetic-dark.tar.xz &>/dev/null
                 sudo cp -r {oomox-aesthetic-light,oomox-aesthetic-dark} /usr/share/icons/ &>/dev/null
                 rm -r ~/.icons/{oomox-aesthetic-light,oomox-aesthetic-dark,*.tar.xz} &>/dev/null
             sleep 2
-            echo -e "XXX\n75\nInstalling icons... Done.\nXXX"
+            echo -e "XXX\n95\nInstalling icons... Done.\nXXX"
             
             sleep 0.5
-            echo -e "XXX\n75\nRefreshing font cache... \nXXX"
+            echo -e "XXX\n90\nRefreshing font cache... \nXXX"
                 fc-cache -rv &>/dev/null
             sleep 2
             echo -e "XXX\n100\nRefreshing font cache... Done.\nXXX"
             sleep 1
-        } | whiptail --title "Yum Removal" --gauge "Please wait while installing" 12 80 0
+        } | whiptail --title "Dotfiles Install/Update" --gauge "Please wait while installing" 6 60 0
 
     }
 
@@ -87,34 +87,34 @@ while true; do
             	# Update Repository
 	            sudo apt-get update -y &>/dev/null
             sleep 2
-            echo -e "XXX\n25\nUpdating Package Manager... Done.\nXXX"
+            echo -e "XXX\n12\nUpdating Package Manager... Done.\nXXX"
             
             sleep 0.5
-            echo -e "XXX\n25\ni3-Gaps Install... \nXXX"
+            echo -e "XXX\n12\ni3-Gaps Install... \nXXX"
                 # i3-Gaps Install
                 sudo apt-get install software-properties-common -y &>/dev/null
                 sudo add-apt-repository ppa:kgilmer/speed-ricer -y &>/dev/null
                 sudo apt-get update -y &>/dev/null
                 sudo apt-get install i3-gaps-wm i3-gaps-session -y &>/dev/null
             sleep 2
-            echo -e "XXX\n50\ni3-Gaps Install... Done.\nXXX"
+            echo -e "XXX\n24\ni3-Gaps Install... Done.\nXXX"
             
             sleep 0.5
-            echo -e "XXX\n50\nOther Dependency Install... \nXXX"
+            echo -e "XXX\n24\nOther Dependency Install... \nXXX"
                 # Other Dependency Install
                 sudo apt install feh git rsync jq python python3-psutil psmisc wireless-tools alsa-utils brightnessctl nitrogen dunst tint2 gsimplecal rofi lxappearance qt5ct qt5-style-plugins lxpolkit xautolock rxvt-unicode xclip scrot thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman ffmpegthumbnailer tumbler w3m w3m-img geany viewnior mpv mpd mpc ncmpcpp pavucontrol parcellite neofetch htop imagemagick ffmpeg playerctl xsettingsd -y &>/dev/null
             sleep 2
-            echo -e "XXX\n75\nOther Dependency Install... Done.\nXXX"
+            echo -e "XXX\n36\nOther Dependency Install... Done.\nXXX"
             
             sleep 0.5
-            echo -e "XXX\n50\nPicom Dependency Install... \nXXX"
+            echo -e "XXX\n36\nPicom Dependency Install... \nXXX"
                 # Picom Dependency Install
                 sudo apt install build-essential libxext-dev libxcb1-dev libxcb-damage0-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-render-util0-dev libxcb-render0-dev libxcb-randr0-dev libxcb-composite0-dev libxcb-image0-dev libxcb-present-dev libxcb-xinerama0-dev libxcb-glx0-dev libpixman-1-dev libdbus-1-dev libconfig-dev libgl1-mesa-dev  libpcre2-dev  libevdev-dev uthash-dev libev-dev libpcre3-dev libx11-xcb-dev ninja-build meson -y &>/dev/null
             sleep 2
-            echo -e "XXX\n75\nPicom Dependency Install... Done.\nXXX"
+            echo -e "XXX\n48\nPicom Dependency Install... Done.\nXXX"
             
             sleep 0.5
-            echo -e "XXX\n50\nPicom Build... \nXXX"
+            echo -e "XXX\n48\nPicom Build... \nXXX"
                 # Change to /tmp directory
                 cd /tmp &>/dev/null
                 # Picom build
@@ -125,34 +125,34 @@ while true; do
                 ninja -C build &>/dev/null
                 ninja -C build install &>/dev/null
             sleep 2
-            echo -e "XXX\n75\nPicom Build... Done.\nXXX"
+            echo -e "XXX\n60\nPicom Build... Done.\nXXX"
             
             sleep 0.5
-            echo -e "XXX\n50\nPsuinfo Install... \nXXX"
+            echo -e "XXX\n60\nPsuinfo Install... \nXXX"
                 # Psuinfo Install
                 [[ ! -d psuinfo ]] && git clone https://github.com/nwg-piotr/psuinfo.git &>/dev/null
                 cd psuinfo/ &>/dev/null
                 sudo cp -r {psuinfo,icons} /usr/bin &>/dev/null
             sleep 2
-            echo -e "XXX\n75\nPsuinfo Install... Done.\nXXX"
+            echo -e "XXX\n72\nPsuinfo Install... Done.\nXXX"
             
             sleep 0.5
-            echo -e "XXX\n50\nNetworkManager-dmenu Install... \nXXX"
+            echo -e "XXX\n84\nNetworkManager-dmenu Install... \nXXX"
                 # networkmanager-dmenu Install
                 [[ ! -d networkmanager-dmenu ]] && git clone https://github.com/firecat53/networkmanager-dmenu.git &>/dev/null
                 cd networkmanager-dmenu/ &>/dev/null
                 sudo cp networkmanager_dmenu /usr/bin &>/dev/null
             sleep 2
-            echo -e "XXX\n75\nNetworkManager-dmenu Install... Done.\nXXX"
+            echo -e "XXX\n96\nNetworkManager-dmenu Install... Done.\nXXX"
             
             sleep 0.5
-            echo -e "XXX\n50\nZsh Install... \nXXX"
+            echo -e "XXX\n96\nZsh Install... \nXXX"
                 # Zsh Install
                 sudo apt install zsh -y &>/dev/null
             sleep 2
-            echo -e "XXX\n75\nZsh Install... Done.\nXXX"
+            echo -e "XXX\n100\nZsh Install... Done.\nXXX"
             sleep 1
-        } |whiptail --title "[Debian based] Dotfiles install" --gauge "Please wait while installing" 12 80 0
+        } |whiptail --title "[Debian based] Dotfiles install" --gauge "Please wait while installing" 6 60 0
 
         # ================== #
         # Dotfiles Install
@@ -167,38 +167,38 @@ while true; do
                 # i3-Gaps Install
                 sudo pacman -S i3-gaps --noconfirm &>/dev/null
             sleep 2
-            echo -e "XXX\n25\ni3-Gaps Install... Done.\nXXX"
+            echo -e "XXX\n16\ni3-Gaps Install... Done.\nXXX"
             
             sleep 0.5
-            echo -e "XXX\n25\nyAudio Utilities Install... \nXXX"
+            echo -e "XXX\n16\nyAudio Utilities Install... \nXXX"
                 # Audio utilities Install
                 sudo pacman -S alsa-utils pulseaudio pulseaudio-alsa --noconfirm &>/dev/null
             sleep 2
-            echo -e "XXX\n50\nyAudio Utilities Install... Done.\nXXX"
+            echo -e "XXX\n32\nyAudio Utilities Install... Done.\nXXX"
             
             sleep 0.5
-            echo -e "XXX\n25\nBrigntessctl Install... \nXXX"
+            echo -e "XXX\n32\nBrigntessctl Install... \nXXX"
                 # Brightnessctl Install
                 yay -S brightnessctl --noconfirm &>/dev/null
             sleep 2
-            echo -e "XXX\n50\nBrigntessctl Install... Done.\nXXX"
+            echo -e "XXX\n48\nBrigntessctl Install... Done.\nXXX"
             
             sleep 0.5
-            echo -e "XXX\n25\nPsuinfo Install... \nXXX"
+            echo -e "XXX\n48\nPsuinfo Install... \nXXX"
                 # Psuinfo Install
                 yay -S psuinfo --noconfirm &>/dev/null
             sleep 2
-            echo -e "XXX\n50\nPsuinfo Install... Done.\nXXX"
+            echo -e "XXX\n64\nPsuinfo Install... Done.\nXXX"
             
             sleep 0.5
-            echo -e "XXX\n50\nWireless Tools Install... \nXXX"
+            echo -e "XXX\n64\nWireless Tools Install... \nXXX"
                 # Wireless tools Install
                 sudo pacman -S wireless_tools --noconfirm &>/dev/null
             sleep 2
-            echo -e "XXX\n75\nWireless Tools Install... Done.\nXXX"
+            echo -e "XXX\n80\nWireless Tools Install... Done.\nXXX"
+            
             sleep 0.5
-
-            echo -e "XXX\n75\nOther Dependency Install... \nXXX"
+            echo -e "XXX\n80\nOther Dependency Install... \nXXX"
                 # Other Dependency Install
                 yay -S dunst tint2 gsimplecal rofi jq feh lxsession lxappearance qt5ct qt5-styleplugins lxsession xautolock rxvt-unicode-patched xclip scrot thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman tumbler w3m geany nano vim viewnior pavucontrol parcellite neofetch htop picom-git gtk2-perl xfce4-power-manager zsh zsh-completions imagemagick playerctl networkmanager-dmenu xsettingsd --noconfirm &>/dev/null
             sleep 2
@@ -223,7 +223,7 @@ while true; do
             sleep 0.5
             echo -e "XXX\n0\nyum remove package_0... \nXXX"
             sleep 2
-            echo -e "XXX\n25\nyum remove package_0... Done.\nXXX"
+            echo -e "XXX\n12.5\nyum remove package_0... Done.\nXXX"
             sleep 0.5
 
             echo -e "XXX\n25\nyum remove package_1... \nXXX"
