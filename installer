@@ -26,7 +26,7 @@ while true; do
             sleep 0.5
             echo -e "XXX\n0\nChange Directory to ~/.cache... \nXXX"
                 [[ ! -d ~/.cache ]] && mkdir ~/.cache &>/dev/null
-                cd ~/.cache &>/dev/null &>/dev/null
+                cd ~/.cache &>/dev/null
             sleep 2
             echo -e "XXX\n0\nChange Directory to ~/.cache... Done.\nXXX"
           
@@ -55,13 +55,13 @@ while true; do
             
             sleep 0.5
             echo -e "XXX\n50\nRemove unnecessary file... \nXXX"
-                # Delete unnecessary in home directory
                 yes | rm -r ~/{README.md,LICENSE,.git} &>/dev/null
             sleep 2
             echo -e "XXX\n70\nRemove unnecessary file... Done.\nXXX"
                    
             sleep 0.5
             echo -e "XXX\n70\nInstalling icons... \nXXX"
+                [[ ! -d ~/.icons ]] && mkdir ~/.icons
                 cd ~/.icons/ &>/dev/null
                 tar -Jxvf oomox-aesthetic-light.tar.xz && tar -Jxvf oomox-aesthetic-dark.tar.xz &>/dev/null
                 sudo cp -r {oomox-aesthetic-light,oomox-aesthetic-dark} /usr/share/icons/ &>/dev/null
