@@ -200,7 +200,7 @@ while true; do
             sleep 0.5
             echo -e "XXX\n80\nOther Dependency Install... \nXXX"
                 # Other Dependency Install
-                yay -S dunst tint2 gsimplecal rofi jq feh lxsession lxappearance qt5ct qt5-styleplugins lxsession xautolock rxvt-unicode-patched xclip scrot thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman tumbler w3m geany nano vim viewnior pavucontrol parcellite neofetch htop picom-git gtk2-perl xfce4-power-manager zsh zsh-completions imagemagick playerctl networkmanager-dmenu xsettingsd --noconfirm &>/dev/null
+                yay -S dunst tint2 gsimplecal rofi jq feh lxsession lxappearance qt5ct qt5-styleplugins lxsession xautolock rxvt-unicode-patched xclip scrot thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman tumbler w3m geany nano vim viewnior pavucontrol parcellite neofetch htop picom-git gtk2-perl xfce4-power-manager zsh imagemagick playerctl networkmanager-dmenu xsettingsd --noconfirm &>/dev/null
             sleep 2
             echo -e "XXX\n100\nOther Dependency Install... Done.\nXXX"
             sleep 1
@@ -212,10 +212,38 @@ while true; do
     }
 
     omzInstall(){
-        chsh -s `which zsh`
-        sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
-        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-        git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+        {
+            sleep 0.5
+            echo -e "XXX\n0\nChanging default shell to zsh... \nXXX"
+                chsh -s `which zsh`
+            sleep 2
+            echo -e "XXX\n20\nChanging default shell to zsh... Done.\nXXX"
+            
+            sleep 0.5
+            echo -e "XXX\n20\nInstalling oh-my-zsh... \nXXX"
+                sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" &&
+            sleep 2
+            echo -e "XXX\n40\nInstalling oh-my-zsh... Done.\nXXX"
+            
+            sleep 0.5
+            echo -e "XXX\n40\nInstalling zsh syntax highlighting... \nXXX"
+                git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+            sleep 2
+            echo -e "XXX\n60\nInstalling zsh syntax highlighting... Done.\nXXX"
+            
+            sleep 0.5
+            echo -e "XXX\n60\nInstalling zsh auto suggestions... \nXXX"
+                git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+            sleep 2
+            echo -e "XXX\n80\nInstalling zsh auto suggestions... Done.\nXXX"
+
+            sleep 0.5
+            echo -e "XXX\n80\nInstalling zsh completions... \nXXX"
+                git clone https://github.com/zsh-users/zsh-completions.git ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions
+            sleep 2
+            echo -e "XXX\n100\nInstalling zsh completions... Done.\nXXX"
+            sleep 1
+        } | whiptail --title "oh-my-zsh & plugin install" --gauge "Please wait while installing" 6 60 0
     }
 
     tes(){
