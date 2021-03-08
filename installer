@@ -102,7 +102,7 @@ while true; do
             sleep 0.5
             echo -e "XXX\n24\nOther Dependency Install... \nXXX"
                 # Other Dependency Install
-                sudo apt install feh git rsync jq python python3-psutil psmisc wireless-tools alsa-utils brightnessctl nitrogen dunst tint2 gsimplecal rofi lxappearance qt5ct qt5-style-plugins lxpolkit xautolock rxvt-unicode xclip scrot thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman ffmpegthumbnailer tumbler w3m w3m-img geany viewnior mpv mpd mpc ncmpcpp pavucontrol parcellite neofetch htop imagemagick ffmpeg playerctl xsettingsd -y &>/dev/null
+                sudo apt install feh curl git rsync jq python python3-psutil psmisc wireless-tools alsa-utils brightnessctl nitrogen dunst tint2 gsimplecal rofi lxappearance qt5ct qt5-style-plugins lxpolkit xautolock rxvt-unicode xclip scrot thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman ffmpegthumbnailer tumbler w3m w3m-img geany viewnior mpv mpd mpc ncmpcpp pavucontrol parcellite neofetch htop imagemagick ffmpeg playerctl xsettingsd -y &>/dev/null
             sleep 2
             echo -e "XXX\n36\nOther Dependency Install... Done.\nXXX"
             
@@ -200,7 +200,7 @@ while true; do
             sleep 0.5
             echo -e "XXX\n80\nOther Dependency Install... \nXXX"
                 # Other Dependency Install
-                yay -S dunst tint2 gsimplecal rofi jq feh lxsession lxappearance qt5ct qt5-styleplugins lxsession xautolock rxvt-unicode-patched xclip scrot thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman tumbler w3m geany nano vim viewnior pavucontrol parcellite neofetch htop picom-git gtk2-perl xfce4-power-manager zsh zsh-completions imagemagick playerctl networkmanager-dmenu xsettingsd --noconfirm &>/dev/null
+                yay -S dunst tint2 curl gsimplecal rofi jq feh lxsession lxappearance qt5ct qt5-styleplugins lxsession xautolock rxvt-unicode-patched xclip scrot thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman tumbler w3m geany nano vim viewnior pavucontrol parcellite neofetch htop picom-git gtk2-perl xfce4-power-manager zsh zsh-completions imagemagick playerctl networkmanager-dmenu xsettingsd --noconfirm &>/dev/null
             sleep 2
             echo -e "XXX\n100\nOther Dependency Install... Done.\nXXX"
             sleep 1
