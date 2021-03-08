@@ -22,7 +22,7 @@ while true; do
                 if [[ "$1" = "update" ]]; then
                     if [[ -d dotfiles-aether ]]; then
                         cd dotfiles-aether/ &>/dev/null
-                        git fetch &>/dev/null
+                        git pull &>/dev/null
                     else 
                         git clone https://github.com/ilham25/dotfiles-aether &>/dev/null
                         cd dotfiles-aether/ &>/dev/null
